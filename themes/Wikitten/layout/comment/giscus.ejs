@@ -1,12 +1,13 @@
+<% if (theme.comment.giscus && theme.comment.giscus.repo &&
+theme.comment.giscus['repo-id'] && theme.comment.giscus['category-id']) { %>
 <div class="giscus"></div>
 <script
   src="https://giscus.app/client.js"
-  data-repo="rinevard/rinevard.github.io"
-  data-repo-id="R_kgDOLkoe9A"
-  data-category="Announcements"
-  data-category-id="DIC_kwDOLkoe9M4CjJnR"
+  data-repo="<%= theme.comment.giscus.repo %>"
+  data-repo-id="<%= theme.comment.giscus['repo-id'] %>"
+  data-category="<%= theme.comment.giscus.category %>"
+  data-category-id="<%= theme.comment.giscus['category-id'] %>"
   data-mapping="pathname"
-  data-strict="0"
   data-reactions-enabled="1"
   data-emit-metadata="0"
   data-input-position="top"
@@ -16,3 +17,4 @@
   crossorigin="anonymous"
   async
 ></script>
+<% } %>

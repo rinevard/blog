@@ -4,6 +4,6 @@
 <section id="comments"><%- partial('comment/duoshuo') %></section>
 <% } else if (theme.comment.youyan) { %>
 <section id="comments"><%- partial('comment/youyan') %></section>
-<% } else if (theme.comment.giscus) { %>
+<% } else if (theme.comment.giscus && theme.comment.giscus.repo) { %>
 <section id="comments"><%- partial('comment/giscus') %></section>
 <% } %> <% } %>
