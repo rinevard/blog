@@ -75,43 +75,41 @@ date: 2025-02-11 10:04:52
     font-size: 20px;
 }
 
-.path {
+/* 修改链接样式 */
+.paths-container a.path {
     padding: 15px;
-    /* cursor: default; */
     text-decoration: none !important;
+    border: none;  /* 移除可能的边框 */
+    background: none;  /* 移除可能的背景 */
 }
 
-/* 修复链接样式 */
-a.path {
-    text-decoration: none !important;
-}
-
-.path-visible {
-    color: #5a3921;
+/* 有人的路径样式 */
+.paths-container a.path-visible {
+    color: #5a3921 !important;  /* 使用 !important 来确保优先级 */
 }
 
 /* 隐藏的路径样式 */
-a.path-hidden {
-    color: transparent;
+.paths-container a.path-hidden {
+    color: transparent !important;  /* 使用 !important 来确保优先级 */
 }
 
 /* 悬停效果 */
-a.path-hidden:hover {
-    color: #5a3921;
+.paths-container a.path-hidden:hover {
+    color: #5a3921 !important;
     transition: color 0.3s ease;
 }
 
-/* visited状态保持一致 */
-a.path-visible:visited {
-    color: #5a3921;
+/* visited状态 */
+.paths-container a.path-visible:visited {
+    color: #5a3921 !important;
 }
 
-a.path-hidden:visited {
-    color: transparent;
+.paths-container a.path-hidden:visited {
+    color: transparent !important;
 }
 
-a.path-hidden:hover:visited {
-    color: #5a3921;
+.paths-container a.path-hidden:hover:visited {
+    color: #5a3921 !important;
 }
 </style>
 
