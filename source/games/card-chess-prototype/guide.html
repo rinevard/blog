@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>游戏指南</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body { max-width: 800px; margin: 0 auto; padding: 20px; display: block; }
+        h1, h2 { text-align: left; }
+        section { margin-bottom: 40px; }
+        .guide-example { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+        .guide-example .card { width: 100px; height: 140px; }
+        .guide-example .board-cell { width: 100px; height: 140px; border: 1px dashed #777; background-color: #555; }
+        /* 额外示例排版 */
+        .guide-diagram { display: flex; flex-wrap: wrap; gap: 15px; align-items: center; margin-top: 10px; }
+        .board-snapshot { display: grid; grid-template-columns: repeat(2, 100px); gap: 10px; }
+        .arrow { font-size: 48px; line-height: 140px; }
+    </style>
+</head>
+<body>
+    <h1>卡牌策略游戏指南</h1>
+
+    <section id="summon">
+        <h2>1. 召唤</h2>
+        <p>在玩家回合中，拖动手牌中的卡牌到战场上的空格即可召唤随从。需要消耗与卡牌左上角<span style="color:rgb(139, 247, 247);">六边形</span>中数字相等的费用。若费用不足，则无法召唤。</p>
+        <div class="guide-example">
+            <div class="card player-card">
+                <div class="card-cost">1</div>
+                <div class="card-ap">1</div>
+                <div class="card-attack">2</div>
+                <div class="card-hp">1</div>
+                <div class="card-info">
+                    <div class="card-name">示例随从</div>
+                    <div class="card-description">战吼：做点什么。</div>
+                </div>
+            </div>
+            <div class="board-cell"></div>
+        </div>
+    </section>
+
+    <section id="stats">
+        <h2>2. 卡牌数值介绍</h2>
+        <p>每张卡牌的四个角展示了关键战斗数值：</p>
+        <ul>
+            <li><span style="color:rgb(139, 247, 247);">左上角六边形</span>：召唤所需费用值 (Cost)</li>
+            <li><span style="color:#40f054;">右上角圆圈</span>：当前行动点 (AP)。每次移动/攻击/换位通常消耗 1 AP</li>
+            <li><span style="color:#ffdd57;">左下角圆圈</span>：攻击力 (Attack)</li>
+            <li><span style="color:#ff6b6b;">右下角圆圈</span>：生命值 (HP)</li>
+        </ul>
+        <div class="guide-example">
+            <div class="card player-card">
+                <div class="card-cost">2</div>
+                <div class="card-ap">1</div>
+                <div class="card-attack">3</div>
+                <div class="card-hp">2</div>
+                <div class="card-info">
+                    <div class="card-name">示例战士</div>
+                    <div class="card-description">这是描述文字。</div>
+                </div>
+            </div>
+        </div>
+
+        <p style="margin-top:10px;">此外，还有两个常见关键词：</p>
+        <ul>
+            <li><strong>战吼</strong>：当卡牌被打出时触发</li>
+            <li><strong>亡语</strong>：当卡牌死亡时触发</li>
+        </ul>
+        <div class="guide-example">
+            <div class="card player-card">
+                <div class="card-cost">1</div>
+                <div class="card-ap">1</div>
+                <div class="card-attack">1</div>
+                <div class="card-hp">2</div>
+                <div class="card-info">
+                    <div class="card-name">战吼示例</div>
+                    <div class="card-description">战吼：抽一张牌。</div>
+                </div>
+            </div>
+            <div class="card player-card">
+                <div class="card-cost">1</div>
+                <div class="card-ap">1</div>
+                <div class="card-attack">1</div>
+                <div class="card-hp">2</div>
+                <div class="card-info">
+                    <div class="card-name">亡语示例</div>
+                    <div class="card-description">亡语：抽一张牌。</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="sacrifice">
+        <h2>3. 献祭</h2>
+        <p>在己方回合，<strong>右键</strong>点击己方非英雄随从可以献祭它。献祭会立即击杀该随从，并为你提供 <strong>1</strong> 点费用。费用不保留到下一回合。</p>
+        <div class="guide-example">
+            <div class="card player-card">
+                <div class="card-cost">0</div>
+                <div class="card-ap">1</div>
+                <div class="card-attack">1</div>
+                <div class="card-hp">1</div>
+                <div class="card-info">
+                    <div class="card-name">待献祭随从</div>
+                    <div class="card-description">无特效</div>
+                </div>
+            </div>
+            <span style="font-size:48px;line-height:140px;">➡️</span>
+            <span style="font-size:24px;line-height:140px;">+1 费用</span>
+        </div>
+    </section>
+
+    <section id="move">
+        <h2>4. 移动</h2>
+        <p>拖动己方随从到与其<strong>上下左右相邻</strong>的空格即可移动。移动通常消耗 1 AP，若 AP 不足将无法移动。部分随从具备免费移动的特殊效果。</p>
+        <div class="guide-diagram">
+            <div>
+                <div class="board-snapshot">
+                    <div class="board-cell">
+                        <div class="card player-card" style="transform:scale(0.9);">
+                            <div class="card-ap">1</div>
+                            <div class="card-attack">1</div>
+                            <div class="card-hp">2</div>
+                            <div class="card-info"><div class="card-name" style="font-size:12px;">示例随从</div></div>
+                        </div>
+                    </div>
+                    <div class="board-cell"></div>
+                </div>
+                <div style="text-align:center;">移动前</div>
+            </div>
+            <span class="arrow">➡️</span>
+            <div>
+                <div class="board-snapshot">
+                    <div class="board-cell"></div>
+                    <div class="board-cell">
+                        <div class="card player-card" style="transform:scale(0.9);">
+                            <div class="card-ap">0</div>
+                            <div class="card-attack">1</div>
+                            <div class="card-hp">2</div>
+                            <div class="card-info"><div class="card-name" style="font-size:12px;">示例随从</div></div>
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align:center;">移动后</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="attack">
+        <h2>5. 攻击</h2>
+        <p>拖动己方随从到与其相邻的敌方随从以进行攻击。攻击会消耗 1 AP，并对目标造成等同于攻击力的伤害。</p>
+        <div class="guide-diagram">
+            <div>
+                <div class="board-snapshot">
+                    <div class="board-cell">
+                        <div class="card player-card" style="transform:scale(0.9);">
+                            <div class="card-ap">1</div>
+                            <div class="card-attack">3</div>
+                            <div class="card-hp">2</div>
+                            <div class="card-info"><div class="card-name" style="font-size:12px;">示例战士</div></div>
+                        </div>
+                    </div>
+                    <div class="board-cell">
+                        <div class="card enemy-card" style="transform:scale(0.9);">
+                            <div class="card-ap">0</div>
+                            <div class="card-attack">1</div>
+                            <div class="card-hp">2</div>
+                            <div class="card-info"><div class="card-name" style="font-size:12px;">示例敌人</div></div>
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align:center;">攻击前</div>
+            </div>
+            <span class="arrow">➡️</span>
+            <div>
+                <div class="board-snapshot">
+                    <div class="board-cell">
+                        <div class="card player-card" style="transform:scale(0.9);">
+                            <div class="card-ap">0</div>
+                            <div class="card-attack">3</div>
+                            <div class="card-hp">2</div>
+                            <div class="card-info"><div class="card-name" style="font-size:12px;">示例战士</div></div>
+                        </div>
+                    </div>
+                    <div class="board-cell"></div>
+                </div>
+                <div style="text-align:center;">攻击后</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="swap">
+        <h2>6. 换位</h2>
+        <p>拖动己方随从到与其相邻的另一张己方随从可以进行换位。换位同样消耗 1 AP。</p>
+        <div class="guide-diagram">
+            <div>
+                <div class="board-snapshot">
+                    <div class="board-cell">
+                        <div class="card player-card" style="transform:scale(0.9);">
+                            <div class="card-ap">1</div>
+                            <div class="card-attack">1</div>
+                            <div class="card-hp">2</div>
+                            <div class="card-info"><div class="card-name" style="font-size:12px;">先锋</div></div>
+                        </div>
+                    </div>
+                    <div class="board-cell">
+                        <div class="card player-card" style="transform:scale(0.9);">
+                            <div class="card-ap">1</div>
+                            <div class="card-attack">2</div>
+                            <div class="card-hp">1</div>
+                            <div class="card-info"><div class="card-name" style="font-size:12px;">卫士</div></div>
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align:center;">换位前</div>
+            </div>
+            <span class="arrow">↔️</span>
+            <div>
+                <div class="board-snapshot">
+                    <div class="board-cell">
+                        <div class="card player-card" style="transform:scale(0.9);">
+                            <div class="card-ap">1</div>
+                            <div class="card-attack">2</div>
+                            <div class="card-hp">1</div>
+                            <div class="card-info"><div class="card-name" style="font-size:12px;">卫士</div></div>
+                        </div>
+                    </div>
+                    <div class="board-cell">
+                        <div class="card player-card" style="transform:scale(0.9);">
+                            <div class="card-ap">0</div>
+                            <div class="card-attack">1</div>
+                            <div class="card-hp">2</div>
+                            <div class="card-info"><div class="card-name" style="font-size:12px;">先锋</div></div>
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align:center;">换位后</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="locked">
+        <h2>7. 被封锁的敌人</h2>
+        <p>部分敌人在出现时会处于<strong>封锁</strong>状态，卡牌会呈灰色并在正中央显示回合倒计时。在倒计时结束前，它们无法行动且无法被攻击。攻击被封锁的敌人会解锁它。</p>
+        <div class="guide-diagram">
+            <div>
+                <div class="board-snapshot">
+                    <div class="board-cell">
+                        <div class="card enemy-card locked" style="transform:scale(0.9);">
+                            
+                            <div class="card-ap">1</div>
+                            <div class="card-attack">2</div>
+                            <div class="card-hp">5</div>
+                            <div class="lock-timer">1</div>
+                            <div class="card-info"><div class="card-name" style="font-size:12px;">封锁敌人</div></div>
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align:center;">解锁前</div>
+            </div>
+            <span class="arrow">➡️</span>
+            <div>
+                <div class="board-snapshot">
+                    <div class="board-cell">
+                        <div class="card enemy-card" style="transform:scale(0.9);">
+                            
+                            
+                            <div class="card-ap">1</div>
+                            <div class="card-attack">2</div>
+                            <div class="card-hp">5</div>
+                            <div class="card-info"><div class="card-name" style="font-size:12px;">封锁敌人</div></div>
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align:center;">解锁后</div>
+            </div>
+        </div>
+    </section>
+    <section id="bonus">
+        <h2>8. 其他信息</h2>
+        <p>如果游戏显示不全，可以使用<strong>ctrl + 减号</strong>缩小页面。</p>
+    </section>
+</body>
+</html> 

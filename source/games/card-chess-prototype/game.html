@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>卡牌游戏原型</title>
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        /* 页面初始缩放至 70% */
+        body {
+            zoom: 70%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="main-content">
+        <div id="guide-container">
+            <button id="toggle-guide"><span class="guide-label">操作指南</span><span class="guide-arrow">▲</span></button>
+            <div id="guide-content">
+                <h3>操作指南</h3>
+                <li>拖动卡牌到牌桌上以召唤随从</li>
+                <li>拖动随从与相邻位置交互：
+                    <ul>
+                        <li>与空位交互：移动</li>
+                        <li>与友方交互：换位</li>
+                        <li>与敌人交互：攻击</li>
+                        <li>与被封锁的敌人交互：攻击并解锁</li>
+                    </ul>
+                    所有行动都消耗 1 行动点，行动点不足时无法行动
+                </li>
+                <li>右键献祭以获得 1 点费用</li>
+                </ul>
+                <!-- 在这里放一张卡牌介绍其数值 -->
+                <h3>卡牌数值介绍</h3>
+                <div class="card player-card" style="width: 90px; height: 170px;">
+                    <div class="card-info">
+                        <div class="card-name">示例卡牌</div>
+                        <!-- 用不同颜色显示费用值、行动点、攻击、生命 -->
+                        <div class="card-description" style="text-align: left;"> <span
+                                style="color: rgb(139, 247, 247);">费用消耗 2</span> <br><span style="color: #40f054;">行动点
+                                1</span> <br><span style="color: #ffdd57;">攻击 3</span> <br><span
+                                style="color: #ff6b6b;">生命 4</span></div>
+                    </div>
+                    <div class="card-cost">2</div>
+                    <div class="card-ap">1</div>
+                    <div class="card-attack">3</div>
+                    <div class="card-hp">4</div>
+                </div>
+                <li>整理手牌：按费用值排序手牌</li>
+            </div>
+        </div>
+        <div id="game-container">
+            <div id="board"></div>
+
+            <div id="hand-container">
+                <div id="hand-header">
+                    <h2>你的手牌</h2>
+                    <div id="hand-count">手牌数量: 0</div>
+                    <div id="mana-display">费用: 0</div>
+                    <button id="sort-hand-btn">整理手牌</button>
+                </div>
+                <div id="hand"></div>
+            </div>
+        </div>
+        <div id="log-container">
+            <h2>游戏日志</h2>
+            <div id="log"></div>
+            <button id="end-turn-btn">结束回合</button>
+        </div>
+    </div>
+
+    <script src="js/cards.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/ai.js"></script>
+    <script src="js/levels.js"></script>
+    <script src="js/game.js"></script>
+
+    <!-- 折叠侧边栏脚本 -->
+    <script>
+        const toggleBtn = document.getElementById('toggle-guide');
+        const guideContainer = document.getElementById('guide-container');
+        const arrowSpan = toggleBtn.querySelector('.guide-arrow');
+        if (toggleBtn && guideContainer && arrowSpan) {
+            toggleBtn.addEventListener('click', () => {
+                guideContainer.classList.toggle('collapsed');
+                arrowSpan.textContent = guideContainer.classList.contains('collapsed') ? '▼' : '▲';
+            });
+        }
+    </script>
+</body>
+
+</html>
