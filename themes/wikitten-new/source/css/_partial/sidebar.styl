@@ -1,0 +1,249 @@
+#sidebar-header
+    display: flex
+    justify-content: space-between
+    align-items: center
+    padding: 10px 5px
+    margin-bottom: 20px
+    
+    .sidebar-title
+        font-size: 16px
+        font-weight: 600
+        color: color-default
+
+.widget
+    @extend $base-style
+    line-height: line-height
+    word-wrap: break-word
+    font-size: 0.9em
+    ul, ol
+        list-style: none
+        margin: 0
+        ul, ol
+            margin: 0 20px
+        ul
+            list-style: disc
+        ol
+            list-style: decimal
+
+.category-list-count
+.tag-list-count
+.archive-list-count
+    padding-left: 5px
+    color: color-grey
+    font-size: 0.85em
+    &:before
+        content: "("
+    &:after
+        content: ")"
+
+.tagcloud
+    a
+        display: inline-block
+        margin-right: 10px
+        &:before
+            content: "#"
+
+.widget-wrap
+    margin: block-margin 0
+    background-color: color-widget-bg
+    border-radius: 12px
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08)
+    padding: 20px
+    h3
+        line-height: 24px
+        background: transparent
+        margin: -21px -21px 15px -21px
+        padding: 0 20px
+        line-height: 30px
+        border: none
+        border-bottom: 1px solid #f2f2f7
+        border-radius: 12px 12px 0 0
+        display: flex
+        justify-content: space-between
+        align-items: center
+        padding: 15px 20px
+        a
+            margin-top: 0
+        a,
+        span
+            border-radius: 4px
+            background: transparent
+            font-size: 15px
+            line-height: 18px
+            padding: 5px
+            font-weight: 500
+            i
+                font-size: 20px
+                vertical-align: middle
+                color: color-link
+
+.widget-title
+    @extend $block-caption
+    margin-bottom: 0
+    font-size: 16px
+    font-weight: 600
+    color: #333
+
+.widget
+    padding: 15px 5px
+    a
+        color: color-sidebar-text
+        text-decoration: none
+        &:hover
+            color: color-sidebar-text-dark
+    ul, ol, dl
+        ul, ol, dl
+            margin-left: 15px
+            list-style: disc
+    ul, ol
+        list-style: none
+        li,
+        .category-list-child
+            padding: 10px 0
+            font-size: font-size
+            border-bottom: 1px solid #f2f2f7
+            &:last-child
+                border-bottom: none
+            a
+                color: color-sidebar-text
+        ul, ol
+            list-style: none
+            li
+                border: none
+                &:last-child
+                    padding-bottom: 0px
+    ul:not(#recent-post), ol:not(#recent-post)
+        li
+            a
+                &:before
+                    color: #ccc
+                    content: "\f0da"
+                    font-size: 12px
+                    margin-right: 6px
+                    font-family: FontAwesome
+                    transition: 0.2s ease
+                &:hover:before
+                    color: color-sidebar-text-dark
+
+#recent-post
+    li
+        clearfix()
+        padding: 10px 0 10px 94px
+    &.no-thumbnail
+        li
+            padding: 10px 0px
+    li
+        .item-thumbnail
+            opacity: 1
+            float: left
+            margin-left: -94px
+            transition: all 0.2s ease
+            .thumbnail
+                width: 80px
+                height: 80px
+                display: block
+                position: relative
+                overflow: hidden
+                border-radius: 8px
+                span
+                    width: 100%
+                    height: 100%
+                    display: block
+                .thumbnail-image
+                    position: absolute
+                    background-size: cover
+                    background-position: center
+                .thumbnail-none
+                    background-image: url(thumbnail-default-small)
+                    background-size: 100% 100%
+        .item-inner
+            a
+            .item-category
+                font-size: 13px
+                text-transform: uppercase
+                a
+                    color: color-link
+                    &:hover
+                        color: color-sidebar-text-dark
+                a, .fa
+                    margin-right: 5px
+            .item-title
+                font-size: 15px
+                a
+                    color: color-sidebar-text-dark
+                    transition: all 0.2s ease
+            .item-date
+                color: #aaa
+                font-size: 13px
+                text-transform: uppercase
+        &:hover
+            .item-thumbnail
+                opacity: 0.8
+            .item-title a
+                color: color-link
+                
+#categories
+    font-size: 14px
+    ul
+        margin-bottom: 0
+        li:last-child
+            padding-bottom: 0
+    li
+        padding: 5px 0
+        ul
+            padding-left: 20px
+            display: none
+            margin-top: 5px
+        &.directory.open > ul
+            display: block
+        &.directory
+            font-weight: 500
+            & > a
+                color: #333
+                display: flex
+                align-items: center
+                padding: 6px 8px
+                margin: 2px 0
+                border-radius: 6px
+                transition: background-color 0.2s ease
+                &:hover
+                    background-color: rgba(0,0,0,0.03)
+                    text-decoration: none
+                i
+                    margin-right: 6px
+                    transition: transform 0.2s ease
+                    color: color-link
+            &.open > a i.fa-folder
+                transform: rotate(0)
+                color: color-link
+            &.open > a i.fa-folder-open
+                color: color-link
+        &.file
+            font-weight: normal
+            word-wrap: break-word
+            &.active > a
+                font-weight: 500
+                color: color-link
+                background-color: rgba(0, 122, 255, 0.08)
+        li.file
+            padding-left: 10px
+            word-wrap: break-word
+            a
+                padding: 4px 8px
+                margin: 2px 0
+                border-radius: 6px
+                display: block
+                transition: background-color 0.2s ease
+                &:hover
+                    background-color: rgba(0,0,0,0.03)
+        a,
+        a:hover
+            display: block
+            text-decoration: none
+        a:focus:before
+            content: "↪"
+            float: left
+            margin-left: -13px
+            font-weight: bold
+            color: #333
+                    

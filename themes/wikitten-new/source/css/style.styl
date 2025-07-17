@@ -1,0 +1,203 @@
+@import "nib"
+@import "_variables"
+@import "_util/mixin"
+@import "_util/grid"
+
+global-reset()
+
+input, button
+    margin: 0
+    padding: 0
+    &::-moz-focus-inner
+        border: 0
+        padding: 0
+
+html, body, #container
+    height: 100%
+
+body
+    color: color-default
+    background: color-background
+    font: font-size font-sans
+    -webkit-text-size-adjust: 100%
+    -webkit-font-smoothing: antialiased
+    -moz-osx-font-smoothing: grayscale
+    text-rendering: optimizeLegibility
+
+a
+    color: color-link
+    text-decoration: none
+    transition: color 0.2s ease-in-out
+    &:visited
+        color: color-link
+
+code
+    margin: 0 2px
+    color: #e96900
+    padding: 3px 5px
+    font-size: 0.9em
+    border-radius: 4px
+    font-family: font-mono
+    background-color: #f8f8f8
+
+.outer
+    clearfix()
+    max-width: 100%
+    margin: 0 auto
+    padding: 0 gutter-width
+    position: relative
+    @media mq-mini
+        padding: 0
+
+.left, .alignleft
+    float: left
+
+.right, .alignright
+    float: right
+
+.clear
+    clear: both
+
+.logo
+    width: logo-width
+    height: logo-height
+    background-repeat: no-repeat
+    background-image: url(logo-url)
+    background-size: logo-width logo-height
+
+#container
+    position: relative
+    min-height: 100%
+    & > .outer
+        margin-bottom: 30px
+
+// 侧边栏固定宽度和位置
+#sidebar
+    position: fixed
+    width: 20%
+    top: 100px
+    bottom: 0
+    left: 2%  // 添加左边距
+    z-index: 10
+    box-sizing: border-box
+    padding-right: 0
+    overflow: hidden  // 改为hidden，不再滚动整个侧边栏
+    transition: all 0.3s ease
+    
+    // 侧边栏内容容器
+    .sidebar-content
+        height: 100%
+        padding-right: 10px
+        overflow-y: auto
+        box-sizing: border-box
+        
+        // 自定义滚动条样式，符合macOS/iOS风格
+        &::-webkit-scrollbar {
+            width: 8px
+            background-color: transparent
+        }
+        
+        &::-webkit-scrollbar-thumb {
+            background-color: rgba(0, 0, 0, 0.15)
+            border-radius: 4px
+        }
+        
+        &::-webkit-scrollbar-thumb:hover {
+            background-color: rgba(0, 0, 0, 0.25)
+        }
+        
+        // Firefox滚动条
+        scrollbar-width: thin
+        scrollbar-color: rgba(0, 0, 0, 0.15) transparent
+    &.hidden
+        transform: translateX(-100%)
+        opacity: 0
+        visibility: hidden
+
+// 主内容区域
+#main
+    border-radius: 12px
+    background: color-widget-bg
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05)
+    width: 75% // 修改为75%宽度
+    margin-left: 24% // 默认状态下偏移以给侧边栏留空间
+    float: left
+    transition: margin-left 0.3s ease
+    padding-top: 0 // 确保顶部没有额外空间
+    &.centered
+        margin-left: 15% // 居中状态下的左边距
+        float: none
+        width: 75% // 保持宽度一致
+    @media mq-tablet
+        width: 75%
+        margin-left: 24%
+        &.centered
+            margin-left: 15%
+            width: 75%
+    @media mq-mobile, mq-mini
+        width: 100%
+        margin-left: 0
+        &.centered
+            margin-left: 0
+
+// 固定在左下角的侧边栏切换按钮
+#sidebar-toggle-btn
+    position: fixed
+    left: 15px
+    bottom: 15px
+    width: 36px
+    height: 36px
+    background: color-link
+    color: white
+    border-radius: 50%
+    text-align: center
+    line-height: 36px
+    cursor: pointer
+    z-index: 1000
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2)
+    transition: all 0.2s ease
+    &:hover
+        transform: scale(1.1)
+        box-shadow: 0 3px 8px rgba(0,0,0,0.3)
+    i
+        font-size: 16px
+
+// 回到顶部按钮移到右下角
+#toTop
+    position: fixed
+    right: 15px
+    bottom: 15px
+    width: 36px
+    height: 36px
+    color: white
+    font-size: 20px
+    line-height: 36px
+    background: color-link
+    text-align: center
+    border-radius: 50%
+    cursor: pointer
+    z-index: 1000
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2)
+    opacity: 0.8
+    display: none
+    transition: all 0.2s ease
+    &:hover
+        transform: scale(1.1)
+        opacity: 1
+        box-shadow: 0 3px 8px rgba(0,0,0,0.3)
+
+@import "_extend"
+@import "_partial/header"
+@import "_partial/profile"
+@import "_partial/article"
+@import "_partial/comment"
+@import "_partial/archive"
+@import "_partial/timeline"
+@import "_partial/footer"
+@import "_partial/sidebar"
+@import "_partial/insight"
+@import "_highlight/index"
+
+if sidebar is left
+    #profile
+        float: right

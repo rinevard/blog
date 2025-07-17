@@ -1,0 +1,7 @@
+<aside id="sidebar">
+    <div class="sidebar-content">
+        <% theme.widgets.forEach(function(widget) { %>
+            <%- partial('widget/' + widget) %>
+        <% }) %>
+    </div>
+</aside>

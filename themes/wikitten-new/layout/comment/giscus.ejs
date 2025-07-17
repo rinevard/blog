@@ -1,0 +1,20 @@
+<% if (theme.comment.giscus && theme.comment.giscus.repo &&
+theme.comment.giscus['repo-id'] && theme.comment.giscus['category-id']) { %>
+<div class="giscus"></div>
+<script
+  src="https://giscus.app/client.js"
+  data-repo="<%= theme.comment.giscus.repo %>"
+  data-repo-id="<%= theme.comment.giscus['repo-id'] %>"
+  data-category="<%= theme.comment.giscus.category %>"
+  data-category-id="<%= theme.comment.giscus['category-id'] %>"
+  data-mapping="pathname"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="top"
+  data-theme="preferred_color_scheme"
+  data-lang="zh-CN"
+  data-loading="lazy"
+  crossorigin="anonymous"
+  async
+></script>
+<% } %>
