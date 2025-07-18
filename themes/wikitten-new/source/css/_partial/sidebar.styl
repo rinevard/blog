@@ -189,6 +189,7 @@
     font-size: 14px
     max-height: 100% // 保持可以占满高度
     overflow-y: auto // 保持垂直滚动
+    overscroll-behavior: contain // Prevent page scroll on wheel when hovering
     ul
         margin-bottom: 0
         margin-right: 0 // 确保右侧不缩进
@@ -276,4 +277,26 @@
                     transform: translateY(-50%)
                     width: 14px
                     text-align: center
+                    
+// =====================
+// Unified scrollbar style for sidebars
+// =====================
+.widget,
+.toc-sidebar-content
+    overscroll-behavior: contain // Prevent page scroll on wheel when hovering
+    // Firefox
+    scrollbar-width: thin
+    scrollbar-color: rgba(0, 0, 0, 0.15) transparent
+
+    // WebKit (Chrome, Edge, Safari)
+    &::-webkit-scrollbar
+        width: 4px
+        height: 4px
+    &::-webkit-scrollbar-track
+        background: transparent
+    &::-webkit-scrollbar-thumb
+        background: rgba(0, 0, 0, 0.15)
+        border-radius: 4px
+        &:hover
+            background: rgba(0, 0, 0, 0.25)
                     
