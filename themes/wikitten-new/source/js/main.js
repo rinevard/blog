@@ -6,30 +6,13 @@
             if (this.alt && !(!!$.prototype.justifiedGallery && $(this).parent('.justified-gallery').length)) {
                 $(this).after('<span class="caption">' + this.alt + '</span>');
             }
-
-            // 对于已经包含在链接内的图片不适用lightGallery
-            if ($(this).parent().prop("tagName") !== 'A') {
-                $(this).wrap('<a href="' + this.src + '" title="' + this.alt + '" class="gallery-item"></a>');
-            }
+            // 移除 lightGallery 相关逻辑
         });
     });
-    if (lightGallery) {
-        var options = {
-            selector: '.gallery-item',
-        };
-        $('.article-entry').each(function (i, entry) {
-            lightGallery(entry, options);
-        });
-        lightGallery($('.article-gallery')[0], options);
-    }
-    if (!!$.prototype.justifiedGallery) {  // if justifiedGallery method is defined
-        var options = {
-            rowHeight: 140,
-            margins: 4,
-            lastRow: 'justify'
-        };
-        $('.justified-gallery').justifiedGallery(options);
-    }
+
+    // 移除 lightGallery 初始化代码
+
+    // 移除 justifiedGallery 初始化代码
 
     // Profile card
     $(document).on('click', function () {

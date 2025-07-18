@@ -28,6 +28,7 @@
     "hexo-renderer-marked": "^0.3.0",
     "hexo-renderer-stylus": "^0.3.3",
     "hexo-theme-Wikitten": "file:",
+    "medium-zoom": "^1.1.0",
     "prismjs": "^1.30.0"
   }
 }
