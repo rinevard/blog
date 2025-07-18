@@ -60,56 +60,59 @@
 
                                                                                 <%- js('libs/jquery/2.1.3/jquery.min')
                                                                                     %>
-                                                                                    <%- js('libs/jquery/plugins/cookie/1.4.1/jquery.cookie')
-                                                                                        %>
 
-                                                                                        <%- partial('plugin/scripts', {
-                                                                                            isHead: true }) %>
-                                                                                            <% if
-                                                                                                (theme.plugins.busuanzi_count)
-                                                                                                { %>
-                                                                                                <script async
-                                                                                                    src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-                                                                                                <% } %>
+                                                                                    <script
+                                                                                        src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+                                                                                    <script>
+                                                                                        if (Cookies.get('sidebarHidden') === 'true') {
+                                                                                            document.documentElement.classList.add('sidebar-hidden');
+                                                                                        }
+                                                                                    </script>
 
-                                                                                                    <!-- PrismJS assets -->
-                                                                                                    <!-- use light theme -->
-                                                                                                    <link
-                                                                                                        rel="stylesheet"
-                                                                                                        href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" />
-                                                                                                    <link
-                                                                                                        rel="stylesheet"
-                                                                                                        href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
-                                                                                                    <script defer
-                                                                                                        src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-                                                                                                    <script defer
-                                                                                                        src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
-                                                                                                    <link
-                                                                                                        rel="stylesheet"
-                                                                                                        href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.css" />
-                                                                                                    <script defer
-                                                                                                        src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.js"></script>
-                                                                                                    <script defer
-                                                                                                        src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
-                                                                                                    <!-- Custom Prism copy button styling -->
-                                                                                                    <%- css('css/prism-copy-button')
-                                                                                                        %>
-                                                                                                        <!-- configure autoloader before it loads -->
-                                                                                                        <script>
-                                                                                                            window.Prism = window.Prism || {};
-                                                                                                            Prism.plugins = Prism.plugins || {};
-                                                                                                            Prism.plugins.autoloader = Prism.plugins.autoloader || {};
-                                                                                                            Prism.plugins.autoloader.languages_path = 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/';
-                                                                                                        </script>
-                                                                                                        <script defer
-                                                                                                            src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
-                                                                                                        <!-- Custom Prism copy button JavaScript -->
-                                                                                                        <script defer
-                                                                                                            src="<%- url_for('js/prism-copy-button.js') %>"></script>
+                                                                                    <%- partial('plugin/scripts', {
+                                                                                        isHead: true }) %>
+                                                                                        <% if
+                                                                                            (theme.plugins.busuanzi_count)
+                                                                                            { %>
+                                                                                            <script async
+                                                                                                src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+                                                                                            <% } %>
 
-                                                                                                        <!-- Medium Zoom for Images -->
-                                                                                                        <script defer
-                                                                                                            src="<%- url_for('libs/medium-zoom/medium-zoom.min.js') %>"></script>
-                                                                                                        <script defer
-                                                                                                            src="<%- url_for('js/medium-zoom-init.js') %>"></script>
+                                                                                                <!-- PrismJS assets -->
+                                                                                                <!-- use light theme -->
+                                                                                                <link rel="stylesheet"
+                                                                                                    href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" />
+                                                                                                <link rel="stylesheet"
+                                                                                                    href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
+                                                                                                <script defer
+                                                                                                    src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+                                                                                                <script defer
+                                                                                                    src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+                                                                                                <link rel="stylesheet"
+                                                                                                    href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.css" />
+                                                                                                <script defer
+                                                                                                    src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.js"></script>
+                                                                                                <script defer
+                                                                                                    src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+                                                                                                <!-- Custom Prism copy button styling -->
+                                                                                                <%- css('css/prism-copy-button')
+                                                                                                    %>
+                                                                                                    <!-- configure autoloader before it loads -->
+                                                                                                    <script>
+                                                                                                        window.Prism = window.Prism || {};
+                                                                                                        Prism.plugins = Prism.plugins || {};
+                                                                                                        Prism.plugins.autoloader = Prism.plugins.autoloader || {};
+                                                                                                        Prism.plugins.autoloader.languages_path = 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/';
+                                                                                                    </script>
+                                                                                                    <script defer
+                                                                                                        src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+                                                                                                    <!-- Custom Prism copy button JavaScript -->
+                                                                                                    <script defer
+                                                                                                        src="<%- url_for('js/prism-copy-button.js') %>"></script>
+
+                                                                                                    <!-- Medium Zoom for Images -->
+                                                                                                    <script defer
+                                                                                                        src="<%- url_for('libs/medium-zoom/medium-zoom.min.js') %>"></script>
+                                                                                                    <script defer
+                                                                                                        src="<%- url_for('js/medium-zoom-init.js') %>"></script>
     </head>

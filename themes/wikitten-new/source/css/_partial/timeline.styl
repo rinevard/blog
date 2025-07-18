@@ -2,13 +2,13 @@
     margin: 40px 20px 40px 40px
     border-left: 3px solid color-border
     @media mq-mini
-        margin: 40px 20px 40px 30px
+        margin: 40px 20px 40px 40px
     @media mq-mobile
-        margin: 40px 20px 40px 30px
+        margin: 40px 20px 40px 40px
 
 .timeline-row
     clearfix()
-    margin: 20px 0
+    margin: 5px 0 // 减小间距
     .node,
     .title
         float: left
@@ -44,6 +44,7 @@
             padding: 10px
         h1
             font-size: 16px
+            font-weight: normal // 移除加粗
             a
                 @extend $link-dark
         .article-meta
@@ -54,13 +55,17 @@
 
 .timeline-row-major
     .node
-        width: 14px
-        height: 14px
+        width: 30px // 增大圆圈以容纳图标
+        height: 30px // 增大圆圈以容纳图标
         font-size: 14px
         margin: 0 0 0 -17px
-        padding: 6px 8px 10px
+        // 使用 flexbox 实现居中
+        display: flex
+        align-items: center
+        justify-content: center
     .title
         font-size: 18px
+        font-weight: normal // 移除加粗
         margin-left: 15px
         line-height: 30px
         a

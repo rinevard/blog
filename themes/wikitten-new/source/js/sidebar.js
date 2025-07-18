@@ -1,12 +1,7 @@
 // 侧边栏状态管理
 $(document).ready(function () {
-    // 加载js-cookie库
-    var script = document.createElement('script');
-    script.src = 'https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js';
-    script.onload = function () {
-        initSidebar();
-    };
-    document.head.appendChild(script);
+    // 立即初始化侧边栏，因为 js-cookie 已经提前加载
+    initSidebar();
 
     function initSidebar() {
         // 检测是否为移动设备
@@ -14,58 +9,32 @@ $(document).ready(function () {
 
         // 侧边栏切换功能
         $('#sidebar-toggle-btn').click(function () {
-            $('#sidebar').toggleClass('hidden');
-            $('#main').toggleClass('centered');
+            // 切换 <html> 元素的类
+            $('html').toggleClass('sidebar-hidden');
 
-            // 强制确保文章顶部没有额外空间
-            $('.article').css('margin-top', '0');
-            $('.article-inner').css('margin-top', '0');
-            $('#main').css('padding-top', '0');
-
-            if (isMobile) {
-                // 移动设备上的行为
-                if ($('#sidebar').hasClass('hidden')) {
-                    $(this).html('<i class="fa fa-angle-double-left"></i>');
-                    Cookies.set('sidebarHidden', 'true', { expires: 30 });
-                } else {
-                    $(this).html('<i class="fa fa-angle-double-right"></i>');
-                    Cookies.remove('sidebarHidden');
-                }
+            // 根据新的状态设置 cookie
+            if ($('html').hasClass('sidebar-hidden')) {
+                Cookies.set('sidebarHidden', 'true', { expires: 30 });
             } else {
-                // 桌面设备上的行为
-                if ($('#sidebar').hasClass('hidden')) {
-                    $(this).html('<i class="fa fa-angle-double-right"></i>');
-                    Cookies.set('sidebarHidden', 'true', { expires: 30 });
-                } else {
-                    $(this).html('<i class="fa fa-angle-double-left"></i>');
-                    Cookies.remove('sidebarHidden');
-                }
+                Cookies.remove('sidebarHidden');
             }
+            // 更新按钮图标
+            updateToggleButtonIcon(isMobile);
         });
 
-        // 读取 Cookie 设置
-        if (Cookies.get('sidebarHidden') === 'true') {
-            $('#sidebar').addClass('hidden');
-            $('#main').addClass('centered');
-            if (isMobile) {
-                $('#sidebar-toggle-btn').html('<i class="fa fa-angle-double-left"></i>');
-            } else {
-                $('#sidebar-toggle-btn').html('<i class="fa fa-angle-double-right"></i>');
-            }
-        } else {
-            if (isMobile) {
-                $('#sidebar-toggle-btn').html('<i class="fa fa-angle-double-right"></i>');
-            } else {
-                $('#sidebar-toggle-btn').html('<i class="fa fa-angle-double-left"></i>');
-            }
-        }
+        // 页面加载时根据 HTML 元素的 class 更新图标
+        updateToggleButtonIcon(isMobile);
 
-        // 监听窗口大小变化，更新移动设备状态
+        // 监听窗口大小变化，更新移动设备状态和图标
         $(window).resize(function () {
             isMobile = window.innerWidth <= 768;
+            updateToggleButtonIcon(isMobile);
+        });
 
-            // 更新图标方向
-            if (Cookies.get('sidebarHidden') === 'true') {
+        // 更新切换按钮图标的函数
+        function updateToggleButtonIcon(isMobile) {
+            var sidebarHidden = $('html').hasClass('sidebar-hidden');
+            if (sidebarHidden) {
                 if (isMobile) {
                     $('#sidebar-toggle-btn').html('<i class="fa fa-angle-double-left"></i>');
                 } else {
@@ -78,7 +47,7 @@ $(document).ready(function () {
                     $('#sidebar-toggle-btn').html('<i class="fa fa-angle-double-left"></i>');
                 }
             }
-        });
+        }
 
         // 阻止在侧边栏上滚动时页面跟着滚动
         function preventPageScroll(selector) {

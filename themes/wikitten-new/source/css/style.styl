@@ -123,12 +123,13 @@ code
         // Firefox滚动条
         scrollbar-width: thin
         scrollbar-color: rgba(0, 0, 0, 0.15) transparent
-    &.hidden
+
+html.sidebar-hidden #sidebar
+    transform: translateX(-100%)
+    opacity: 0
+    visibility: hidden
+    @media mq-mobile, mq-mini
         transform: translateX(-100%)
-        opacity: 0
-        visibility: hidden
-        @media mq-mobile, mq-mini
-            transform: translateX(-100%)
 
 // 主内容区域
 #main
@@ -141,26 +142,31 @@ code
     float: left
     transition: margin-left 0.3s ease
     padding-top: 0
-    &.centered
-        margin-left: 15%
-        margin-right: 0
-        float: none
-        width: 70%
-    @media mq-tablet
+
+html.sidebar-hidden #main
+    margin-left: 15%
+    margin-right: 0
+    float: none
+    width: 70%
+
+@media mq-tablet
+    #main
         width: 70%
         margin-left: 25%
         margin-right: 0
-        &.centered
-            margin-left: 15%
-            margin-right: 0
-            width: 70%
-    @media mq-mobile, mq-mini
+    html.sidebar-hidden #main
+        margin-left: 15%
+        margin-right: 0
+        width: 70%
+
+@media mq-mobile, mq-mini
+    #main
         width: 100%
         margin-left: 0
         margin-right: 0
-        &.centered
-            margin-left: 0
-            margin-right: 0
+    html.sidebar-hidden #main
+        margin-left: 0
+        margin-right: 0
 
 // 固定在左下角的侧边栏切换按钮
 #sidebar-toggle-btn
