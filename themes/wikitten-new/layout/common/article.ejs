@@ -153,45 +153,55 @@
                                                                                                                                             var passwordInput = document.getElementById('password-input');
                                                                                                                                             var tocSidebar = document.querySelector('.toc-sidebar');
                                                                                                                                             var errorMessage = document.getElementById('error-message');
+                                                                                                                                            var promptElement = document.getElementById('password-prompt');
+                                                                                                                                            var lockedContent = document.getElementById('locked-content');
+                                                                                                                                            const storageKey = 'unlocked_<%= post.slug %>';
 
-                                                                                                                                            if (tocSidebar) {
-                                                                                                                                                tocSidebar.style.display = 'none';
+                                                                                                                                            function unlockPage() {
+                                                                                                                                                if (promptElement) promptElement.style.display = 'none';
+                                                                                                                                                if (lockedContent) lockedContent.style.display = 'block';
+
+                                                                                                                                                if (typeof mediumZoom === 'function' && lockedContent) {
+                                                                                                                                                    mediumZoom(lockedContent.querySelectorAll('img'), {
+                                                                                                                                                        background: 'var(--color-background)'
+                                                                                                                                                    });
+                                                                                                                                                }
+
+                                                                                                                                                if (titleElement) titleElement.textContent = '<%- post.locktitle %>';
+                                                                                                                                                if (tocSidebar) tocSidebar.style.display = 'block';
                                                                                                                                             }
 
                                                                                                                                             function checkPassword() {
                                                                                                                                                 var password = passwordInput.value;
                                                                                                                                                 var ans = '<%- post.ans %>';
                                                                                                                                                 if (password === ans) {
-                                                                                                                                                    document.getElementById('password-prompt').style.display = 'none';
-                                                                                                                                                    var lockedContent = document.getElementById('locked-content');
-                                                                                                                                                    lockedContent.style.display = 'block';
-
-                                                                                                                                                    if (typeof mediumZoom === 'function') {
-                                                                                                                                                        mediumZoom(lockedContent.querySelectorAll('img'), {
-                                                                                                                                                            background: 'var(--color-background)'
-                                                                                                                                                        });
-                                                                                                                                                    }
-
-                                                                                                                                                    if (titleElement) {
-                                                                                                                                                        titleElement.textContent = '<%- post.locktitle %>';
-                                                                                                                                                    }
-                                                                                                                                                    if (tocSidebar) {
-                                                                                                                                                        tocSidebar.style.display = 'block';
-                                                                                                                                                    }
+                                                                                                                                                    sessionStorage.setItem(storageKey, 'true');
+                                                                                                                                                    unlockPage();
                                                                                                                                                 } else {
-                                                                                                                                                    errorMessage.style.display = 'block';
+                                                                                                                                                    if (errorMessage) errorMessage.style.display = 'block';
                                                                                                                                                 }
                                                                                                                                             }
 
-                                                                                                                                            submitButton.addEventListener('click', checkPassword);
-                                                                                                                                            passwordInput.addEventListener('keydown', function (event) {
-                                                                                                                                                if (event.key === "Enter") {
-                                                                                                                                                    checkPassword();
+                                                                                                                                            if (sessionStorage.getItem(storageKey) === 'true') {
+                                                                                                                                                unlockPage();
+                                                                                                                                            } else {
+                                                                                                                                                if (tocSidebar) tocSidebar.style.display = 'none';
+
+                                                                                                                                                if (submitButton) {
+                                                                                                                                                    submitButton.addEventListener('click', checkPassword);
                                                                                                                                                 }
-                                                                                                                                            });
-                                                                                                                                            passwordInput.addEventListener('input', function () {
-                                                                                                                                                errorMessage.style.display = 'none';
-                                                                                                                                            });
+                                                                                                                                                if (passwordInput) {
+                                                                                                                                                    passwordInput.addEventListener('keydown', function (event) {
+                                                                                                                                                        if (event.key === "Enter") {
+                                                                                                                                                            event.preventDefault();
+                                                                                                                                                            checkPassword();
+                                                                                                                                                        }
+                                                                                                                                                    });
+                                                                                                                                                    passwordInput.addEventListener('input', function () {
+                                                                                                                                                        if (errorMessage) errorMessage.style.display = 'none';
+                                                                                                                                                    });
+                                                                                                                                                }
+                                                                                                                                            }
                                                                                                                                         });
                                                                                                                                     </script>
                                                                                                                                     <% }
