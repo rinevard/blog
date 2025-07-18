@@ -54,28 +54,26 @@
 
 .toc-sidebar-content {
   position: absolute;
-  right: calc(2% + 30px); /* 与横线右侧对齐，30px是h1横线的宽度 */
+  right: 30px; /* 与横线右侧对齐 */
   top: 0;
   background: white;
   border-radius: 8px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
   padding: 16px;
   width: 240px;
-  max-height: 80vh;
-  overflow-y: auto;
+  max-height: 50vh;
+  overflow-y: auto; /* 当内容超出时显示滚动条 */
   overflow-x: hidden; /* 隐藏横向滚动条 */
   word-wrap: break-word; /* 允许长单词换行 */
   opacity: 0;
   visibility: hidden;
-  transition: all 0.2s ease;
-  transform: translateX(10px);
+  transition: opacity 0.2s ease, visibility 0.2s ease; /* 移除transform的过渡 */
   z-index: 1100; /* 确保在内容前面 */
 }
 
 .toc-sidebar:hover .toc-sidebar-content {
   opacity: 1;
   visibility: visible;
-  transform: translateX(0);
 }
 
 .toc-sidebar:hover .toc-sidebar-indicator {
@@ -124,9 +122,17 @@
 .toc-sidebar-content a {
   color: #333;
   text-decoration: none;
-  transition: color 0.2s ease;
+  transition: color 0.2s ease, background-color 0.2s ease;
+  display: block;
+  border-radius: 4px;
+  padding: 2px 8px;
+  margin: 0 -8px;
 }
 
 .toc-sidebar-content a:hover {
+  background-color: #f2f2f2;
+}
+
+.toc-sidebar-content .toc-item.active > a {
   color: color-link;
-} 
+}

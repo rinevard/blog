@@ -79,5 +79,27 @@ $(document).ready(function () {
                 }
             }
         });
+
+        // 阻止在侧边栏上滚动时页面跟着滚动
+        function preventPageScroll(selector) {
+            $(document).on('mouseenter', selector, function () {
+                var element = $(this)[0];
+                $(this).on('wheel', function (e) {
+                    var delta = e.originalEvent.deltaY;
+                    var isAtTop = element.scrollTop === 0;
+                    var isAtBottom = element.scrollHeight - element.scrollTop === element.clientHeight;
+
+                    if ((delta < 0 && isAtTop) || (delta > 0 && isAtBottom)) {
+                        e.preventDefault();
+                    }
+                });
+            }).on('mouseleave', selector, function () {
+                $(this).off('wheel');
+            });
+        }
+
+        // 应用于左侧边栏和右侧TOC
+        preventPageScroll('#sidebar .widget');
+        preventPageScroll('.toc-sidebar-content');
     }
 }); 

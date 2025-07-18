@@ -103,8 +103,28 @@ $(document).ready(function () {
             $(`.toc-sidebar-indicator[data-target="${currentId}"]`).addClass('active');
 
             // 同时高亮目录中的对应链接
-            $('.toc-sidebar-content .toc-link').removeClass('active');
-            $(`.toc-sidebar-content .toc-link[href="#${currentId}"]`).addClass('active');
+            $('.toc-sidebar-content .toc-item').removeClass('active');
+
+            // 遍历所有链接，解码后进行比较，以支持非 ASCII 字符的 ID
+            $('.toc-sidebar-content .toc-link').each(function () {
+                const link = $(this);
+                const href = link.attr('href');
+                if (href && href.startsWith('#')) {
+                    try {
+                        // 解码href以匹配原始ID
+                        if (decodeURIComponent(href.substring(1)) === currentId) {
+                            link.closest('.toc-item').addClass('active');
+                            return false; // 找到匹配项，退出循环
+                        }
+                    } catch (e) {
+                        // 如果解码失败，尝试直接比较（作为后备）
+                        if (href.substring(1) === currentId) {
+                            link.closest('.toc-item').addClass('active');
+                            return false;
+                        }
+                    }
+                }
+            });
         }
     });
 
