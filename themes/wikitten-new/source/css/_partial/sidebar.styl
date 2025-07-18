@@ -205,6 +205,27 @@
             margin-right: 0 // 确保右侧不缩进
         &.directory.open > ul
             display: block
+        
+        // 统一文件夹和文件的基本样式
+        &.directory, &.file
+            & > a
+                border-radius: 6px
+                transition: background-color 0.2s ease
+                width: 100% // 确保可选区域占满整行
+                box-sizing: border-box // 确保宽度计算包含内边距
+                display: block
+                margin: 2px 0
+                &:hover
+                    background-color: rgba(0,0,0,0.03)
+                    text-decoration: none
+                    border-radius: 6px
+            &.active > a
+                font-weight: 500
+                color: color-link
+                background-color: rgba(0, 122, 255, 0.08)
+                border-radius: 6px
+        
+        // 文件夹特有样式
         &.directory
             font-weight: 500
             & > a
@@ -212,14 +233,6 @@
                 display: flex
                 align-items: center
                 padding: 6px 8px
-                margin: 2px 0
-                border-radius: 6px
-                transition: background-color 0.2s ease
-                width: 100% // 确保可选区域占满整行
-                box-sizing: border-box // 确保宽度计算包含内边距
-                &:hover
-                    background-color: rgba(0,0,0,0.03)
-                    text-decoration: none
                 i
                     margin-right: 6px
                     transition: transform 0.2s ease
@@ -232,33 +245,35 @@
                 color: color-link
             &.open > a i.fa-folder-open
                 color: color-link
+        
+        // 文件特有样式
         &.file
             font-weight: normal
             word-wrap: break-word
-            &.active > a
-                font-weight: 500
-                color: color-link
-                background-color: rgba(0, 122, 255, 0.08)
+            & > a
+                padding: 4px 8px 4px 28px
+                position: relative
+                i
+                    position: absolute
+                    left: 8px
+                    top: 50%
+                    transform: translateY(-50%)
+                    width: 14px
+                    text-align: center
+        
+        // 子目录中的文件
         li.file
-            padding-left: 4px // 减小缩进
-            padding-right: 0 // 确保右侧不缩进
+            padding-left: 4px
+            padding-right: 0
             word-wrap: break-word
             a
-                padding: 4px 8px 4px 28px // 调整内边距，左侧留出与文件夹图标相同的空间
-                margin: 2px 0
-                border-radius: 6px
-                display: block
-                width: 100% // 确保可选区域占满整行
-                box-sizing: border-box // 确保宽度计算包含内边距
-                transition: background-color 0.2s ease
-                position: relative // 添加相对定位
-                &:hover
-                    background-color: rgba(0,0,0,0.03)
+                padding: 4px 8px 4px 28px
+                position: relative
                 i
-                    position: absolute // 绝对定位图标
-                    left: 8px // 与文件夹图标对齐
-                    top: 50% // 垂直居中
-                    transform: translateY(-50%) // 垂直居中
-                    width: 14px // 固定图标宽度
-                    text-align: center // 图标居中
+                    position: absolute
+                    left: 8px
+                    top: 50%
+                    transform: translateY(-50%)
+                    width: 14px
+                    text-align: center
                     
