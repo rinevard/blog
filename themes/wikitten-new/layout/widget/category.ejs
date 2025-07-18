@@ -1,102 +1,71 @@
-<% if (site.categories.length) { %>
+<% if (site.categories && site.categories.length) { %>
     <div class="widget-wrap" id='categories'>
         <h3 class="widget-title">
             <span>文章</span>
         </h3>
-        
-        <% 
-            function listCategories(categories, posts) {
-                function layArticles(posts) {
-                    var classifiedArticles = {'_root': []};
-                    posts.forEach(function(post,i){
-                            var last_post_cat;
-                            var post_info = {
-                            "title": post.title,
-                            "date": post.date,
-                            "path": url_for(post.path),
-                            "_id": post._id
-                        };
-                        if(post.categories.length) {
-                            last_cat_id = post.categories.data.slice(-1)[0]['_id'];
-                            if(!classifiedArticles[last_cat_id]) classifiedArticles[last_cat_id] = [];
-                            classifiedArticles[last_cat_id].push(post_info);
-                        } else {
-                            classifiedArticles['_root'].push(post_info);
-                        }
-                    });
-                    return classifiedArticles;
-                }
-                function prepareQuery(categories, parent) {
-                    var query = {};
-                    if (parent) {
-                        query.parent = parent;
-                    } else {
-                        query.parent = {$exists: false};
-                    }
-                    return categories.find(query).sort('name', 1).filter(function(cat) {
-                        return cat.length;
-                    });
-                }
-                function hierarchicalList(tree, parent, classifiedArticles) {
-                  if(!tree.name) tree = {"name": "_root", "_id": "_root", "children": [], "articles": classifiedArticles['_root']};
-                  prepareQuery(categories, parent).forEach(function(cat, i) {
-                      var now_category = {
-                          "_id": cat._id, 
-                          "name": cat.name, 
-                          "children": [],
-                          "articles": classifiedArticles[cat._id]
-                      };
-                      if(is_post() && now_category.articles) {
-                          now_category.articles.forEach(function(post, i) {
-                              if(page._id == post._id) now_category["selected"] = true;
-                          });
-                      }
-                      var childTree = hierarchicalList(now_category, cat._id, classifiedArticles);
-                      if(childTree.selected) {tree["selected"] = true};
-                      tree.children.push(childTree);
-                  });
-                  return tree;
-                }
-                var classifiedArticles = layArticles(posts);
-                var categoriesTree = hierarchicalList({}, null, classifiedArticles);
-                return categoriesTree;
-            }
-        %>
-        <% 
-            function visitTreePosts(branch, perExpand) {
-             %> <ul class="unstyled" id="tree" <% if(perExpand) { %>style="display: block;"<% } %>> <%
-                if(branch.children && branch.children.length) {
-                    branch.children.forEach(function(category){
-                    %>
-                    <li class="directory<%- category.selected ? ' open' : '' %>">
-                        <a href="#" data-role="directory">
-                            <i class="fa fa-folder<%- (perExpand || category.selected) ? '-open' : '' %>"></i>
-                            <%- category.name %>
-                        </a>
-                        <% visitTreePosts(category, perExpand) %>
-                    </li> 
-                    <%  
-                    });
-                } 
-                if(branch.articles && branch.articles.length) {
-                    branch.articles.sort(function(post0, post1) {
-                        return new Date(post0.date) - new Date(post1.date)
-                    }).forEach(function(post){
-                        %> <li class="file<%- (is_post() && post._id == page._id) ? ' active' : '' %>"><a href="<%- post.path %>"><i class="fa fa-file-text-o"></i> <%- post.title %></a></li> <%
-                    });
-                }
-             %> </ul> <%
-            }
-        %>
-        <%
-            var categoriesTree = listCategories(site.categories, site.posts);
-            visitTreePosts(categoriesTree, theme.customize.category_perExpand);
-        %>
+
+        <div class="widget categories-widget">
+            <% function listCategories(categories, posts) { function layArticles(posts) { var
+                classifiedArticles={'_root': []}; if (!posts || !posts.forEach) return classifiedArticles;
+                posts.forEach(function(post, i) { var last_post_cat; var post_info={ "title" : post.title, "date" :
+                post.date, "path" : url_for(post.path), "_id" : post._id }; if (post.categories &&
+                post.categories.length) { last_cat_id=post.categories.data.slice(-1)[0]['_id']; if
+                (!classifiedArticles[last_cat_id]) classifiedArticles[last_cat_id]=[];
+                classifiedArticles[last_cat_id].push(post_info); } else { classifiedArticles['_root'].push(post_info); }
+                }); return classifiedArticles; } function prepareQuery(categories, parent) { if (!categories ||
+                !categories.find) { return []; } var query={}; if (parent) { query.parent=parent; } else {
+                query.parent={$exists: false}; } try { return categories.find(query).sort('name',
+                1).filter(function(cat) { return cat.length; }); } catch (e) { console.error('Error in prepareQuery:',
+                e); return []; } } function hierarchicalList(tree, parent, classifiedArticles) { if (!tree.name)
+                tree={ "name" : "_root" , "_id" : "_root" , "children" : [], "articles" : classifiedArticles['_root'] };
+                var cats=prepareQuery(categories, parent); if (cats && cats.forEach) { cats.forEach(function(cat, i) {
+                var now_category={ "_id" : cat._id, "name" : cat.name, "children" : [], "articles" :
+                classifiedArticles[cat._id] }; if (is_post() && now_category.articles) {
+                now_category.articles.forEach(function(post, i) { if (page._id==post._id) now_category["selected"]=true;
+                }); } var childTree=hierarchicalList(now_category, cat._id, classifiedArticles); if (childTree.selected)
+                {tree["selected"]=true}; tree.children.push(childTree); }); } return tree; } var
+                classifiedArticles=layArticles(posts); var categoriesTree=hierarchicalList({}, null,
+                classifiedArticles); return categoriesTree; } %>
+
+                <% function visitTreePosts(branch, perExpand) { %>
+                    <ul class="unstyled" id="tree" <% if(perExpand) { %>style="display: block;"<% } %>>
+                            <% if (branch.children && branch.children.length) {
+                                branch.children.forEach(function(category) { %>
+                                <li class="directory<%- category.selected ? ' open' : '' %>">
+                                    <a href="#" data-role="directory">
+                                        <i
+                                            class="fa fa-folder<%- (perExpand || category.selected) ? '-open' : '' %>"></i>
+                                        <%- category.name %>
+                                    </a>
+                                    <% visitTreePosts(category, perExpand) %>
+                                </li>
+                                <% }); } if (branch.articles && branch.articles.length) {
+                                    branch.articles.sort(function(post0, post1) { return new Date(post0.date) - new
+                                    Date(post1.date) }).forEach(function(post) { %>
+                                    <li class="file<%- (is_post() && post._id == page._id) ? ' active' : '' %>">
+                                        <a href="<%- post.path %>">
+                                            <i class="fa fa-file-text-o"></i>
+                                            <%- post.title %>
+                                        </a>
+                                    </li>
+                                    <% }); } %>
+                    </ul>
+                    <% } %>
+
+                        <% try { %>
+                            <% var categoriesTree=listCategories(site.categories, site.posts); %>
+                                <% visitTreePosts(categoriesTree, theme.customize.category_perExpand); %>
+                                    <% } catch (e) { %>
+                                        <p>分类加载错误</p>
+                                        <% } %>
+        </div>
     </div>
+
     <script>
-        $(document).ready(function() {
-            var iconFolderOpenClass  = 'fa-folder-open';
+        $(document).ready(function () {
+            var iconFolderOpenClass = 'fa-folder-open';
             var iconFolderCloseClass = 'fa-folder';
+
             // Handle directory-tree expansion:
             // 左键单独展开目录
             $(document).on('click', '#categories a[data-role="directory"]', function (event) {
@@ -106,6 +75,7 @@
                 var expanded = icon.hasClass(iconFolderOpenClass);
                 var subtree = $(this).siblings('ul');
                 icon.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+
                 if (expanded) {
                     if (typeof subtree != 'undefined') {
                         subtree.slideUp({ duration: 100 });
@@ -118,24 +88,36 @@
                     icon.addClass(iconFolderOpenClass);
                 }
             });
+
             // 右键展开下属所有目录
-            $('#categories a[data-role="directory"]').bind("contextmenu", function(event){
+            $('#categories a[data-role="directory"]').bind("contextmenu", function (event) {
                 event.preventDefault();
-                
+
                 var icon = $(this).children('.fa');
                 var expanded = icon.hasClass(iconFolderOpenClass);
                 var listNode = $(this).siblings('ul');
                 var subtrees = $.merge(listNode.find('li ul'), listNode);
                 var icons = $.merge(listNode.find('.fa'), icon);
                 icons.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
-                if(expanded) {
+
+                if (expanded) {
                     subtrees.slideUp({ duration: 100 });
                     icons.addClass(iconFolderCloseClass);
                 } else {
                     subtrees.slideDown({ duration: 100 });
                     icons.addClass(iconFolderOpenClass);
                 }
-            })
+            });
         });
     </script>
-<% } %>
+    <% } else { %>
+        <!-- 没有分类时显示 -->
+        <div class="widget-wrap" id='categories'>
+            <h3 class="widget-title">
+                <span>文章</span>
+            </h3>
+            <div class="widget categories-widget">
+                <p>暂无分类</p>
+            </div>
+        </div>
+        <% } %>

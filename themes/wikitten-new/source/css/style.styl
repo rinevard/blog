@@ -75,25 +75,39 @@ code
 #sidebar
     position: fixed
     width: 20%
-    top: 100px
-    bottom: 20% // 设置距离底部20%的上限
-    left: 2%  // 添加左边距
+    top: 8%
+    bottom: 10%
+    left: 2%
+    right: auto
     z-index: 10
     box-sizing: border-box
     padding-right: 0
-    overflow: hidden  // 改为hidden，不再滚动整个侧边栏
+    overflow: hidden
     transition: all 0.3s ease
+    
+    // 移动设备上的响应式布局
+    @media mq-mobile, mq-mini
+        width: 70%
+        left: 0
+        top: 0
+        bottom: 0
+        transform: translateX(-100%)
+        &.hidden
+            transform: translateX(0)
+        &:not(.hidden)
+            transform: translateX(-100%)
     
     // 侧边栏内容容器
     .sidebar-content
         height: 100%
         padding-right: 10px
-        overflow-y: auto  // 将滚动条移到内部
         box-sizing: border-box
+        display: flex
+        flex-direction: column
         
         // 自定义滚动条样式，符合macOS/iOS风格
         &::-webkit-scrollbar {
-            width: 8px
+            width: 4px
             background-color: transparent
         }
         
@@ -113,6 +127,8 @@ code
         transform: translateX(-100%)
         opacity: 0
         visibility: hidden
+        @media mq-mobile, mq-mini
+            transform: translateX(-100%)
 
 // 主内容区域
 #main
@@ -121,30 +137,36 @@ code
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05)
     width: 70%
     margin-left: 25%
+    margin-right: 0
     float: left
     transition: margin-left 0.3s ease
-    padding-top: 0 // 确保顶部没有额外空间
+    padding-top: 0
     &.centered
-        margin-left: 15% // 居中状态下的左边距
+        margin-left: 15%
+        margin-right: 0
         float: none
         width: 70%
     @media mq-tablet
         width: 70%
         margin-left: 25%
+        margin-right: 0
         &.centered
             margin-left: 15%
+            margin-right: 0
             width: 70%
     @media mq-mobile, mq-mini
         width: 100%
         margin-left: 0
+        margin-right: 0
         &.centered
             margin-left: 0
+            margin-right: 0
 
 // 固定在左下角的侧边栏切换按钮
 #sidebar-toggle-btn
     position: fixed
-    left: 15px
-    bottom: 15px
+    left: 3%
+    bottom: 5%
     width: 36px
     height: 36px
     background: color-link
@@ -161,12 +183,13 @@ code
         box-shadow: 0 3px 8px rgba(0,0,0,0.3)
     i
         font-size: 16px
+        transform: none
 
 // 回到顶部按钮移到右下角
 #toTop
     position: fixed
-    right: 15px
-    bottom: 15px
+    right: 2%
+    bottom: 5%
     width: 36px
     height: 36px
     color: white
@@ -196,8 +219,16 @@ code
 @import "_partial/footer"
 @import "_partial/sidebar"
 @import "_partial/insight"
-@import "_highlight/index"
+// @import "_highlight/index" // disabled: switching to PrismJS for code highlighting
 
 if sidebar is left
     #profile
         float: right
+
+// Notion-like text selection (low-saturation blue)
+::selection
+    background: rgba(35,131,226,0.28)
+    color: inherit
+::-moz-selection
+    background: rgba(35,131,226,0.28)
+    color: inherit

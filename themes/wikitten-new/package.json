@@ -27,6 +27,7 @@
     "hexo-renderer-ejs": "^0.3.1",
     "hexo-renderer-marked": "^0.3.0",
     "hexo-renderer-stylus": "^0.3.3",
-    "hexo-theme-Wikitten": "file:"
+    "hexo-theme-Wikitten": "file:",
+    "prismjs": "^1.30.0"
   }
 }

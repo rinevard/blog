@@ -19,7 +19,7 @@
         list-style: none
         margin: 0
         ul, ol
-            margin: 0 20px
+            margin: 0 0 0 10px // 只保留左侧缩进，移除右侧缩进
         ul
             list-style: disc
         ol
@@ -48,11 +48,17 @@
     background-color: color-widget-bg
     border-radius: 12px
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08)
-    padding: 20px
+    padding: 0
+    display: flex
+    flex-direction: column
+    max-height: 100%
+    
+    // 侧边栏标题部分，固定不滚动
     h3
+        flex: 0 0 auto // 不伸缩，保持固定高度
         line-height: 24px
         background: transparent
-        margin: -21px -21px 15px -21px
+        margin: 0
         padding: 0 20px
         line-height: 30px
         border: none
@@ -85,7 +91,9 @@
     color: #333
 
 .widget
-    padding: 15px 5px
+    padding: 15px 20px
+    flex: 1 // 让widget占用剩余空间
+    overflow-y: auto // 保持垂直滚动
     a
         color: color-sidebar-text
         text-decoration: none
@@ -93,7 +101,8 @@
             color: color-sidebar-text-dark
     ul, ol, dl
         ul, ol, dl
-            margin-left: 15px
+            margin-left: 6px // 减小缩进
+            margin-right: 0 // 确保右侧不缩进
             list-style: disc
     ul, ol
         list-style: none
@@ -106,6 +115,8 @@
                 border-bottom: none
             a
                 color: color-sidebar-text
+                width: 100% // 确保可选区域占满整行
+                display: block // 确保可点击区域占满整行
         ul, ol
             list-style: none
             li
@@ -116,14 +127,7 @@
         li
             a
                 &:before
-                    color: #ccc
-                    content: "\f0da"
-                    font-size: 12px
-                    margin-right: 6px
-                    font-family: FontAwesome
-                    transition: 0.2s ease
-                &:hover:before
-                    color: color-sidebar-text-dark
+                    display: none // 删除小箭头
 
 #recent-post
     li
@@ -157,7 +161,6 @@
                     background-image: url(thumbnail-default-small)
                     background-size: 100% 100%
         .item-inner
-            a
             .item-category
                 font-size: 13px
                 text-transform: uppercase
@@ -184,16 +187,22 @@
                 
 #categories
     font-size: 14px
+    max-height: 100% // 保持可以占满高度
+    overflow-y: auto // 保持垂直滚动
     ul
         margin-bottom: 0
+        margin-right: 0 // 确保右侧不缩进
         li:last-child
             padding-bottom: 0
     li
         padding: 5px 0
+        position: relative // 添加相对定位
         ul
-            padding-left: 20px
+            padding-left: 6px // 减小缩进
+            padding-right: 0 // 确保右侧不缩进
             display: none
             margin-top: 5px
+            margin-right: 0 // 确保右侧不缩进
         &.directory.open > ul
             display: block
         &.directory
@@ -206,6 +215,8 @@
                 margin: 2px 0
                 border-radius: 6px
                 transition: background-color 0.2s ease
+                width: 100% // 确保可选区域占满整行
+                box-sizing: border-box // 确保宽度计算包含内边距
                 &:hover
                     background-color: rgba(0,0,0,0.03)
                     text-decoration: none
@@ -213,6 +224,9 @@
                     margin-right: 6px
                     transition: transform 0.2s ease
                     color: color-link
+                    flex-shrink: 0 // 防止图标缩小
+                    width: 14px // 固定图标宽度
+                    text-align: center // 图标居中
             &.open > a i.fa-folder
                 transform: rotate(0)
                 color: color-link
@@ -226,24 +240,25 @@
                 color: color-link
                 background-color: rgba(0, 122, 255, 0.08)
         li.file
-            padding-left: 10px
+            padding-left: 4px // 减小缩进
+            padding-right: 0 // 确保右侧不缩进
             word-wrap: break-word
             a
-                padding: 4px 8px
+                padding: 4px 8px 4px 28px // 调整内边距，左侧留出与文件夹图标相同的空间
                 margin: 2px 0
                 border-radius: 6px
                 display: block
+                width: 100% // 确保可选区域占满整行
+                box-sizing: border-box // 确保宽度计算包含内边距
                 transition: background-color 0.2s ease
+                position: relative // 添加相对定位
                 &:hover
                     background-color: rgba(0,0,0,0.03)
-        a,
-        a:hover
-            display: block
-            text-decoration: none
-        a:focus:before
-            content: "↪"
-            float: left
-            margin-left: -13px
-            font-weight: bold
-            color: #333
+                i
+                    position: absolute // 绝对定位图标
+                    left: 8px // 与文件夹图标对齐
+                    top: 50% // 垂直居中
+                    transform: translateY(-50%) // 垂直居中
+                    width: 14px // 固定图标宽度
+                    text-align: center // 图标居中
                     
