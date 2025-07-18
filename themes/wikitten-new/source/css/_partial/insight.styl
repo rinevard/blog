@@ -3,7 +3,7 @@ ins-container-width = 540px
 ins-text-grey = #9a9a9a
 ins-border-grey = #e2e2e2
 ins-background-grey = #f7f7f7
-ins-background-blue = #006BDE
+ins-background-blue = #007aff
 
 $ins-full-screen
     top: 0
@@ -42,17 +42,17 @@ $ins-full-screen
     font-size: 16px
     box-shadow: none
     font-weight: 200
-    border-radius: 0
+    border-radius: 8px 8px 0 0 // 圆角优化
     background: white
     line-height: 20px
     box-sizing: border-box
-    padding: 12px 28px 12px 20px
+    padding: 15px 28px 15px 20px // 增加padding
     border-bottom: 1px solid ins-border-grey
-    font-family: "Microsoft Yahei Light", "Microsoft Yahei", Helvetica, Arial, sans-serif
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", "Microsoft Yahei", sans-serif
 
 .ins-close
     top: 50%
-    right: 6px
+    right: 15px
     width: 20px
     height: 20px
     font-size: 16px
@@ -60,6 +60,7 @@ $ins-full-screen
     position: absolute
     text-align: center
     display: inline-block
+    color: #999
     &:hover
         color: ins-background-blue
 
@@ -71,12 +72,16 @@ $ins-full-screen
     box-sizing: border-box
     width: ins-container-width
     margin-left: -(ins-container-width/2)
+    border-radius: 8px
+    background: white
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2)
     @media screen and (max-width: 559px), screen and (max-height: 479px)
         top: 0
         left: 0
         margin: 0
         width: 100%
         height: 100%
+        border-radius: 0
         background: ins-background-grey
 
 .ins-section-wrapper
@@ -86,20 +91,22 @@ $ins-full-screen
     bottom: 0
     overflow-y: auto
     position: absolute
+    border-radius: 0 0 8px 8px
 
 .ins-section-container
     position: relative
-    background: ins-background-grey
+    background: white
 
 .ins-section
     font-size: 14px
     line-height: 16px
     .ins-section-header,
     .ins-search-item
-        padding: 8px 15px
+        padding: 10px 15px
     .ins-section-header
-        color: ins-text-grey
+        color: ins-background-blue
         border-bottom: 1px solid ins-border-grey
+        font-weight: 500
     .ins-slug
         margin-left: 5px
         color: ins-text-grey
@@ -116,6 +123,7 @@ $ins-full-screen
         header
             .fa
                 margin-right: 8px
+                color: ins-background-blue
         .ins-search-preview
             height: 18px
             font-size: 12px
@@ -123,15 +131,21 @@ $ins-full-screen
             margin: 5px 0 0 20px
         &:hover,
         &.active
-            color: white
-            background: ins-background-blue
-            .ins-slug,
+            color: color-default
+            background: rgba(0, 122, 255, 0.08)
+            border-radius: 6px
+            transition: background-color 0.2s ease
+            .fa
+                color: ins-background-blue
+            .ins-slug
+                color: ins-text-grey
             .ins-search-preview
+                color: ins-text-grey
             .search-keyword
-                color: white
+                color: ins-background-blue
         .search-keyword
-            color: #555
+            color: ins-background-blue
             font-size: 14px
-            border-bottom: 1px dashed #555
+            border-bottom: 1px dashed ins-background-blue
             font-weight: bold
             font-style: italic

@@ -76,7 +76,7 @@ code
     position: fixed
     width: 20%
     top: 100px
-    bottom: 0
+    bottom: 20% // 设置距离底部20%的上限
     left: 2%  // 添加左边距
     z-index: 10
     box-sizing: border-box
@@ -88,7 +88,7 @@ code
     .sidebar-content
         height: 100%
         padding-right: 10px
-        overflow-y: auto
+        overflow-y: auto  // 将滚动条移到内部
         box-sizing: border-box
         
         // 自定义滚动条样式，符合macOS/iOS风格
@@ -119,21 +119,21 @@ code
     border-radius: 12px
     background: color-widget-bg
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05)
-    width: 75% // 修改为75%宽度
-    margin-left: 24% // 默认状态下偏移以给侧边栏留空间
+    width: 70%
+    margin-left: 25%
     float: left
     transition: margin-left 0.3s ease
     padding-top: 0 // 确保顶部没有额外空间
     &.centered
         margin-left: 15% // 居中状态下的左边距
         float: none
-        width: 75% // 保持宽度一致
+        width: 70%
     @media mq-tablet
-        width: 75%
-        margin-left: 24%
+        width: 70%
+        margin-left: 25%
         &.centered
             margin-left: 15%
-            width: 75%
+            width: 70%
     @media mq-mobile, mq-mini
         width: 100%
         margin-left: 0

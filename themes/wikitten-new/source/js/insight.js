@@ -248,4 +248,11 @@
                 gotoLink($container.find('.ins-selectable.active').eq(0)); break;
         }
     });
+    
+    // 添加点击搜索框外部区域关闭搜索框的功能
+    $(document).on('click', '.ins-search-mask', function(e) {
+        if ($(e.target).hasClass('ins-search-mask')) {
+            $main.removeClass('show');
+        }
+    });
 })(jQuery, window.INSIGHT_CONFIG);
