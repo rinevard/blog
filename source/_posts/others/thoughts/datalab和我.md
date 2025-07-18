@@ -1,8 +1,11 @@
 ---
-title: 写完了datalab，突然感觉好孤单
+title: _Datalab和我
 toc: true
 date: 2025-02-21 19:49:30
 tags:
+question: "没有学分，没有绩点，没有老师，没有同学，只有一个信念 —— "
+ans: "你在变强"
+locktitle: "写完了datalab，突然感觉好孤单"
 categories:
   - 杂谈
   - 碎碎念
