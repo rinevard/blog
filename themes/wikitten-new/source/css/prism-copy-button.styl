@@ -1,0 +1,72 @@
+/* Custom Notion-like Copy Button for Code Blocks */
+@import "_variables"
+
+/* Position the toolbar at the top right and ensure it's always visible */
+div.code-toolbar>.toolbar
+    position: absolute
+    top: code-copy-top
+    right: code-copy-right
+    opacity: 1 !important
+    transition: opacity 0.3s
+    z-index: z-index-code-copy
+
+/* Style the copy button to look like Notion's */
+div.code-toolbar>.toolbar>.toolbar-item>button.copy-to-clipboard-button
+    /* Reset button styling */
+    all: unset
+
+    /* Notion-like styling */
+    background-color: code-copy-bg-color
+    color: code-copy-text-color
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"
+    font-size: code-copy-font-size
+    font-weight: 500
+    padding: code-copy-padding
+    border-radius: code-copy-border-radius
+    cursor: pointer
+    box-shadow: rgba(15, 15, 15, 0.1) 0px 0px 0px 1px, rgba(15, 15, 15, 0.1) 0px 2px 4px
+    transition: background-color 0.1s ease
+    display: inline-flex
+    align-items: center
+    justify-content: center
+
+/* Button hover state */
+div.code-toolbar>.toolbar>.toolbar-item>button.copy-to-clipboard-button:hover
+    background-color: rgba(246, 246, 246, 0.95)
+
+/* Button active/pressed state */
+div.code-toolbar>.toolbar>.toolbar-item>button.copy-to-clipboard-button:active,
+div.code-toolbar>.toolbar>.toolbar-item>button.copy-to-clipboard-button.copied
+    background-color: rgba(236, 236, 236, 1)
+    transform: translateY(1px)
+
+/* Always show the text "Copy" on the button */
+div.code-toolbar>.toolbar>.toolbar-item>button.copy-to-clipboard-button:empty::before
+    content: "Copy"
+
+/* Override default Prism toolbar button styling */
+div.code-toolbar>.toolbar>.toolbar-item>button
+    color: rgba(55, 53, 47, 0.8) !important
+    background: none !important
+    box-shadow: none !important
+    padding: 0 !important
+
+/* Fix code block styling to accommodate the copy button */
+pre[class*="language-"]
+    position: relative
+    margin: 1em 0
+    padding-top: 2.5em !important
+
+/* Add dark mode support */
+@media (prefers-color-scheme: dark)
+    div.code-toolbar>.toolbar>.toolbar-item>button.copy-to-clipboard-button
+        background-color: code-copy-dark-bg-color
+        color: code-copy-dark-text-color
+        box-shadow: rgba(255, 255, 255, 0.1) 0px 0px 0px 1px, rgba(255, 255, 255, 0.1) 0px 2px 4px
+
+    div.code-toolbar>.toolbar>.toolbar-item>button.copy-to-clipboard-button:hover
+        background-color: rgba(47, 47, 47, 0.95)
+
+    div.code-toolbar>.toolbar>.toolbar-item>button.copy-to-clipboard-button:active,
+    div.code-toolbar>.toolbar>.toolbar-item>button.copy-to-clipboard-button.copied
+        background-color: rgba(57, 57, 57, 1) 

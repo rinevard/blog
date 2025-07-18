@@ -78,7 +78,7 @@ div.article-meta-button
         line-height: 20px
         background: #ffffff
         margin: 0 0 20px 0
-        padding: 12px article-padding
+        padding: 12px 0
         line-height: 30px
         border: none
         border-bottom: 1px solid #f2f2f7
@@ -105,7 +105,7 @@ div.article-meta-button
     line-height: line-height
     p, table
         line-height: line-height
-        margin: line-height 0
+        margin: paragraph-margin 0
     h1, h2, h3, h4, h5, h6
         font-weight: 600
         line-height: line-height-title
@@ -140,7 +140,7 @@ div.article-meta-button
         margin: auto
         transition: all 0.3s ease // 添加过渡效果
         border-radius: 4px // 添加圆角
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) // 轻微的阴影效果，类似 Apple/Notion
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) // 轻微的阴影效果
         
     img.zoom-img // Medium-Zoom 的图片样式
         cursor: zoom-in
@@ -271,9 +271,10 @@ div.article-meta-button
         // PrismJS toolbar (e.g., copy button)
         .toolbar
             position: absolute
-            top: 6px
-            right: 6px
+            top: code-copy-top
+            right: code-copy-right
             background: none
+            z-index: z-index-code-copy
             .toolbar-item
                 cursor: pointer
                 background: transparent
@@ -564,3 +565,10 @@ ol.toc
 .lg-outer
     .lg-thumb-item
         border-radius: 0 !important
+
+.article-gallery-img {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    z-index: z-index-base;
+}

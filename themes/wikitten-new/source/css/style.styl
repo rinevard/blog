@@ -74,7 +74,7 @@ code
 // 侧边栏固定宽度和位置
 #sidebar
     position: fixed
-    width: 20%
+    width: left-sidebar-width
     top: 8%
     bottom: 10%
     left: 2%
@@ -136,18 +136,18 @@ html.sidebar-hidden #sidebar
     border-radius: 12px
     background: color-widget-bg
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05)
-    width: 70%
-    margin-left: 25%
-    margin-right: 0
+    width: main-content-width
+    margin-left: main-content-margin-left
+    margin-right: main-content-margin-right
     float: left
     transition: margin-left 0.3s ease
     padding-top: 0
 
 html.sidebar-hidden #main
-    margin-left: 15%
+    margin-left: main-content-hidden-margin-left
     margin-right: 0
     float: none
-    width: 70%
+    width: main-content-width
 
 @media mq-tablet
     #main
@@ -226,6 +226,7 @@ html.sidebar-hidden #main
 @import "_partial/sidebar"
 @import "_partial/insight"
 @import "_partial/toc-sidebar"
+@import "prism-copy-button"
 // @import "_highlight/index" // disabled: switching to PrismJS for code highlighting
 
 if sidebar is left
@@ -239,3 +240,30 @@ if sidebar is left
 ::-moz-selection
     background: rgba(35,131,226,0.28)
     color: inherit
+
+#header {
+    position: relative;
+    z-index: z-index-header;
+    transition: all 0.2s ease-in-out;
+    background: #fff;
+}
+
+#mobile-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: mobile-nav-width;
+    height: 100%;
+    background: color-mobile-nav-background;
+    z-index: z-index-mobile-nav;
+    transition: all 0.2s ease-in-out;
+    transform: translateX(-100%);
+}
+
+.medium-zoom-overlay {
+    z-index: z-index-zoom-overlay;
+}
+
+.medium-zoom-image--opened {
+    z-index: z-index-zoom-image;
+}

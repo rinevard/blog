@@ -8,8 +8,8 @@
             <% function listCategories(categories, posts) { function layArticles(posts) { var
                 classifiedArticles={'_root': []}; if (!posts || !posts.forEach) return classifiedArticles;
                 posts.forEach(function(post, i) { var last_post_cat; var post_info={ "title" : post.title, "date" :
-                post.date, "path" : url_for(post.path), "_id" : post._id }; if (post.categories &&
-                post.categories.length) { last_cat_id=post.categories.data.slice(-1)[0]['_id']; if
+                post.date, "path" : url_for(post.path), "_id" : post._id, "is_homepage" : post.is_homepage }; if
+                (post.categories && post.categories.length) { last_cat_id=post.categories.data.slice(-1)[0]['_id']; if
                 (!classifiedArticles[last_cat_id]) classifiedArticles[last_cat_id]=[];
                 classifiedArticles[last_cat_id].push(post_info); } else { classifiedArticles['_root'].push(post_info); }
                 }); return classifiedArticles; } function prepareQuery(categories, parent) { if (!categories ||
@@ -43,7 +43,7 @@
                                     branch.articles.sort(function(post0, post1) { return new Date(post0.date) - new
                                     Date(post1.date) }).forEach(function(post) { %>
                                     <li class="file<%- (is_post() && post._id == page._id) ? ' active' : '' %>">
-                                        <a href="<%- post.path %>">
+                                        <a href="<%- post.is_homepage ? '/' : post.path %>">
                                             <i class="fa fa-file-text-o"></i>
                                             <%- post.title %>
                                         </a>

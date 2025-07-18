@@ -17,12 +17,14 @@ color-widget-background = #ffffff
 color-widget-border = #e5e5ea
 
 // Fonts
-font-sans = -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", "Microsoft Yahei", Helvetica, Arial, sans-serif
-font-serif = "SF Pro Display", Georgia, "Times New Roman", "Microsoft Yahei", serif
-font-mono = "SF Mono", "Source Code Pro", Consolas, Monaco, Menlo, monospace
-font-size = 16px
-line-height = 1.6em
-line-height-title = 1.3em
+font-sans = system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", Arial, sans-serif
+font-serif = Georgia, "Times New Roman", "Microsoft Yahei", serif
+font-mono = SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace
+font-size = 18px
+font-size-sidebar = 16px
+line-height = 1.8em
+paragraph-margin = 1.0em
+line-height-title = 1.2em
 
 // Header
 header-height = 56px
@@ -41,12 +43,22 @@ profile-avatar-size = 128px
 
 // Layout
 block-margin = 40px
-article-padding = 24px
+article-padding = 5%
 mobile-nav-width = 280px
 main-column = 7.5
 sidebar-column = 2.5
 profile-column = 2.5
 sidebar-column-tablet = 3.5
+
+// 新增：主内容区和侧边栏宽度控制
+main-content-width = 70%
+left-sidebar-width = 20%
+main-content-margin-left = 25% // left-sidebar-width + 5%
+main-content-margin-right = 5% // 100% - width - margin-left
+main-content-hidden-margin-left = 15% // (100% - main-content-width) / 2
+
+// 新增：目录栏宽度控制
+toc-sidebar-width = 16em
 
 if sidebar
     _sidebar-column = sidebar-column
@@ -80,6 +92,34 @@ mq-normal = "screen and (min-width: 1200px)"
 
 // Code Highlight
 highlight = hexo-config("customize.highlight") || "tomorrow"
+
+// Code copy button position
+code-copy-top = 0.5em
+code-copy-right = 1.5em  // 增加这个值会让按钮向左移动
+
+// z-index
+z-index-base = 1
+z-index-code-copy = 1
+z-index-sidebar = 10
+z-index-mobile-nav = 200
+z-index-search-mask = 300
+z-index-search-container = 301
+z-index-sticky-profile = 400
+z-index-header = 500
+z-index-zoom-overlay = 600
+z-index-zoom-image = 601
+
+// Code copy button style
+code-copy-font-size = 18px
+
+// 下面这几个变量好像没用
+code-copy-padding = 3px 8px
+code-copy-border-radius = 4px
+code-copy-bg-color = rgba(255, 255, 255, 0.9)
+code-copy-text-color = rgba(55, 53, 47, 0.8)
+code-copy-dark-bg-color = rgba(37, 37, 37, 0.9)
+code-copy-dark-text-color = rgba(255, 255, 255, 0.8)
+// 没用的到此结束
 
 // Miscellaneous
 color-twitter = #00aced
