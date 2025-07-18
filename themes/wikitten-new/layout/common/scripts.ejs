@@ -3,3 +3,7 @@
 
         <!-- Custom Scripts -->
         <%- js('js/main') %>
+            <% if (!is_archive() && !is_category() && !is_tag() && (is_post() || is_page())) { %>
+                <!-- Notion风格目录JS -->
+                <%- js('js/toc-sidebar') %>
+                    <% } %>

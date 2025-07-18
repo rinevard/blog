@@ -1,0 +1,132 @@
+/* Floating TOC Sidebar */
+.toc-sidebar {
+  position: fixed;
+  top: 42%;
+  right: 0;
+  transform: translateY(-50%);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding-right: 2%; /* 增加右侧边距，让横线更靠左一些 */
+}
+
+.toc-sidebar-indicator {
+  height: 5px;
+  background-color: rgba(55, 53, 47, 0.6); /* 增加默认状态下的不透明度 */
+  border-radius: 3px;
+  margin: 5px 0; /* 增加上下间距 */
+  transition: all 0.2s ease;
+  cursor: pointer;
+  z-index: -1;
+}
+
+.toc-sidebar-indicator:hover {
+  background-color: rgba(55, 53, 47, 0.9);
+}
+
+/* 高亮当前标题的指示器 */
+.toc-sidebar-indicator.active {
+  background-color: color-link;
+  height: 6px;
+}
+
+/* 不同级别标题的横线长度 */
+.toc-sidebar-h1 {
+  width: 30px; /* 使用固定像素宽度代替百分比，更容易看到 */
+}
+
+.toc-sidebar-h2 {
+  width: 25px;
+}
+
+.toc-sidebar-h3 {
+  width: 20px;
+}
+
+.toc-sidebar-h4 {
+  width: 15px;
+}
+
+.toc-sidebar-h5, .toc-sidebar-h6 {
+  width: 10px;
+}
+
+.toc-sidebar-content {
+  position: absolute;
+  right: calc(2% + 30px); /* 与横线右侧对齐，30px是h1横线的宽度 */
+  top: 0;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+  padding: 16px;
+  width: 240px;
+  max-height: 80vh;
+  overflow-y: auto;
+  overflow-x: hidden; /* 隐藏横向滚动条 */
+  word-wrap: break-word; /* 允许长单词换行 */
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease;
+  transform: translateX(10px);
+  z-index: 1100; /* 确保在内容前面 */
+}
+
+.toc-sidebar:hover .toc-sidebar-content {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+}
+
+.toc-sidebar:hover .toc-sidebar-indicator {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.toc-sidebar-content .toc-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #333;
+}
+
+.toc-sidebar-content ol.toc {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.toc-sidebar-content .toc-item {
+  margin: 4px 0;
+  line-height: 1.5;
+}
+
+.toc-sidebar-content .toc-level-1 {
+  font-weight: 500;
+}
+
+.toc-sidebar-content .toc-level-2 {
+  padding-left: 12px;
+}
+
+.toc-sidebar-content .toc-level-3 {
+  padding-left: 24px;
+}
+
+.toc-sidebar-content .toc-level-4 {
+  padding-left: 36px;
+}
+
+.toc-sidebar-content .toc-level-5,
+.toc-sidebar-content .toc-level-6 {
+  padding-left: 48px;
+}
+
+.toc-sidebar-content a {
+  color: #333;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.toc-sidebar-content a:hover {
+  color: color-link;
+} 
