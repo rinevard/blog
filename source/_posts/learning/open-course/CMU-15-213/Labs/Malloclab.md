@@ -32,7 +32,7 @@ Perf index = 47 (util) + 40 (thru) = 87/100
 #define GET(p) (*((unsigned int * )p))
 ```
 
-像这种就是有问题的，因为没给 p 加括号！比如说，GET((char _)bp - WSIZE) 的原本意图是让 bp 减去 WSIZE，但放到 GET 里就导致 bp 先被转换成 unsigned int 指针，再减去 WSIZE，从而让 bp 减去了 WSIZE _ sizeof(unsigned int)！
+像这种就是有问题的，因为没给 p 加括号！比如说，GET((char \*)bp - WSIZE) 的原本意图是让 bp 减去 WSIZE，但放到 GET 里就导致 bp 先被转换成 unsigned int 指针，再减去 WSIZE，从而让 bp 减去了 WSIZE \* sizeof(unsigned int)！
 
 # validation_check
 

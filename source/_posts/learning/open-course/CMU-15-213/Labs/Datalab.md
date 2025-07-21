@@ -39,7 +39,7 @@ Datalab 的难度很高。它的难度主要体现在技巧性上，这在整数
 | 1   | 0   | 1   |
 | 1   | 1   | 0   |
 
-关注 x^y 为 1 时 x 和 y 的取值，可以发现 x^y == ((\~x) & y) | (x & (\~y))，再用德摩根律把 ‘|’ 换成 ‘\~’ 和 ‘&’ 即可。
+关注 x^y 为 1 时 x 和 y 的取值，可以发现 `x^y == ((~x) & y) | (x & (~y))`，再用德摩根律把 `|` 换成 `~` 和 `&` 即可。
 
 ```c
 /*
@@ -51,7 +51,7 @@ Datalab 的难度很高。它的难度主要体现在技巧性上，这在整数
  */
 int bitXor(int x, int y)
 {
-  /* x Xor y = (~x & y) | (x & ~y)
+  /* x Xor y = ((~x) & y) | (x & (~y))
     a | b = ~(~a & ~b)
   */
   return ~(~(x & ~y) & ~(~x & y));
@@ -86,7 +86,6 @@ int tmin(void)
 我这里是直接构建了 -Tmax = 100…01，然后检查 x-Tmax 是否为 0.
 
 ```c
-// 2
 /*
  * isTmax - returns 1 if x is the maximum, two's complement number,
  *     and 0 otherwise

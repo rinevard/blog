@@ -1,3 +1,5 @@
+---
+
 title: "About"
 layout: "page"
 
@@ -9,4 +11,6 @@ layout: "page"
 
 如果想和我联系，欢迎发邮件到 rinevard@outlook.com！（不过不一定会看）
 
-我的 Github 账号: [Rinevard](https://github.com/rinevard)
+我的 Github 账号: [Rinevard](https://github.com/rinevard).
+
+另外，欢迎到[我的 itch 主页](https://rinevard.itch.io/)上玩我的游戏！

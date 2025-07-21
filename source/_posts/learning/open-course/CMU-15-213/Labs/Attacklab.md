@@ -32,15 +32,13 @@ attacklab 的攻击主要分为植入攻击代码和 ROP 攻击。
 
 攻击 1 只是简单地让我们熟悉一下工作流程，我们只要覆写掉返回地址就好了。
 
-大致的攻击流程是——跑一下 ctarget 看看我们写入的内容会被放在栈的哪个位置，熟悉位置以后把十六进制的攻击内容写到某个 txt 文件里，再用 hex2raw 转换为输入值，最后把输入值传到 ctarget 就实现了攻击。
+大致的攻击流程是——跑一下 ctarget 看看我们写入的内容会被放在栈的哪个位置，熟悉位置以后把十六进制的攻击内容写到某个 txt 文件里，再用 `./hex2raw < rinevinput.txt > evil` 转换为输入值，最后把输入值传到 ctarget 就实现了攻击。
 
 下面给一些小 hints。
 
-用 `./hex2raw < rinevinput.txt > evil` 来把内容从十六进制转换为输入值, 并把输入值写入 evil（我把攻击文件叫做 evil）
-
 注意, 不要把内容写入形如 `evil.txt` 这样的**有格式的文件**里! 这可能修改一些特殊字符。我之前就踩了这个坑。
 
-使用 `./ctarget -q < evil` 来运行，因为我们不能连接到 CMU 服务器（唉，CMU）.
+使用`./ctarget -q < evil`来运行，因为我们不能连接到 CMU 服务器（唉，CMU）.
 
 ![](images/learning/open-course/CMU-15213/Labs/Attacklab/evil.jpg)
 
@@ -75,8 +73,12 @@ segmentation fault 的发生**大概率是因为栈指针没有对齐**。给能
 ### 攻击 4
 
 我是笨蛋，又踩了一个坑。考虑指令
+
+```asm
 4017fc: 3b 3d e2 3c 20 00 cmp 0x203ce2(%rip),%edi # 6054e4 <cookie>
 401802: 75 20 jne 401824 <touch2+0x38>
+```
+
 在执行 cmp 指令时：RIP 的值是 0x401802，而不是 0x4017fc。我之前还想了半天为什么我们能指向 cookie。
 
 回到题目上来，根据提示，我们要用 mov，pop，ret，那么思路是写入 cookie 到栈中，pop 它到某个地方（addval_219 有 pop %rax），最后移动到 rdi 中（addval_273 有 movl %eax %edi）
