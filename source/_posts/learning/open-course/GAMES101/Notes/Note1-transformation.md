@@ -170,9 +170,9 @@ n & 0 & 0 & 0 \\
 &=
 
 \begin{bmatrix}
-\frac{2n}{r-l} & 0 & \frac{l+r}{l-r} & 0 \\
-0 & \frac{2n}{t-b} & \frac{b+t}{b-t} & 0 \\
-0 & 0 & \frac{f+n}{n-f} & \frac{2fn}{n-f} \\
+\frac{2n}{r-l} & 0 & -\frac{r+l}{r-l} & 0 \\
+0 & \frac{2n}{t-b} & -\frac{t+b}{t-b} & 0 \\
+0 & 0 & \frac{n+f}{n-f} & -\frac{2nf}{n-f} \\
 0 & 0 & -1 & 0
 \end{bmatrix}
 \end{align*}
@@ -208,7 +208,7 @@ $$
 \begin{bmatrix}
 \frac{1}{\text{aspect} \times \tan(\frac{\text{fov}}{2})} & 0 & 0 & 0 \\
 0 & \frac{1}{\tan(\frac{\text{fov}}{2})} & 0 & 0 \\
-0 & 0 & \frac{f+n}{n-f} & \frac{2fn}{n-f} \\
+0 & 0 & \frac{n+f}{n-f} & -\frac{2nf}{n-f} \\
 0 & 0 & -1 & 0
 \end{bmatrix}
 $$
@@ -257,12 +257,12 @@ w_x & w_y & w_z & 0 \\
 0 & 0 & 0 & 1
 \end{bmatrix}
 \\
-&\large
-\text{M}_\text{per} =
+\large
+&\text{M}_\text{per} =
 \begin{bmatrix}
 \frac{1}{\text{aspect} \times \tan(\frac{\text{fov}}{2})} & 0 & 0 & 0 \\
 0 & \frac{1}{\tan(\frac{\text{fov}}{2})} & 0 & 0 \\
-0 & 0 & \frac{f+n}{n-f} & \frac{2fn}{n-f} \\
+0 & 0 & \frac{n+f}{n-f} & -\frac{2nf}{n-f} \\
 0 & 0 & -1 & 0
 \end{bmatrix}
 \\
@@ -277,3 +277,54 @@ w_x & w_y & w_z & 0 \\
 
 \end{align*}
 $$
+
+要注意的是，我们讨论的 $n$ 和 $f$ 被定义为坐标值，它们是小于 0 的。一些地方把 $n$ 和 $f$ 定义为到近/远平面的距离，这是大于 0 的。我们的 $\text{M}_\text{per}$ 和他们的在某些项上有正负号的差异，他们的 $\text{M}_\text{their-per}$ 为：
+
+$$
+\large
+\text{M}_\text{their-per} =
+\begin{bmatrix}
+\frac{1}{\text{aspect} \times \tan(\frac{\text{fov}}{2})} & 0 & 0 & 0 \\
+0 & \frac{1}{\tan(\frac{\text{fov}}{2})} & 0 & 0 \\
+0 & 0 & \frac{n+f}{n-f} & \frac{2nf}{n-f} \\
+0 & 0 & -1 & 0
+\end{bmatrix}
+$$
+
+Godot 把 $n$ 和 $f$ 定义为到近/远平面的距离，下面是他们设置 $\text{M}_\text{per}$ 的代码。还要注意的是，他们使用 column-major 的方法存储数据，即
+
+$$
+M =
+\begin{pmatrix}
+\text{columns}[0][0] & \text{columns}[1][0] \\
+\text{columns}[0][1] & \text{columns}[1][1]
+\end{pmatrix}
+$$
+
+```cpp
+void Projection::set_perspective(real_t p_fovy_degrees, real_t p_aspect, real_t p_z_near, real_t p_z_far, bool p_flip_fov) {
+	if (p_flip_fov) {
+		p_fovy_degrees = get_fovy(p_fovy_degrees, 1.0 / p_aspect);
+	}
+
+	real_t sine, cotangent, deltaZ;
+	real_t radians = Math::deg_to_rad(p_fovy_degrees / 2.0);
+
+	deltaZ = p_z_far - p_z_near;
+	sine = Math::sin(radians);
+
+	if ((deltaZ == 0) || (sine == 0) || (p_aspect == 0)) {
+		return;
+	}
+	cotangent = Math::cos(radians) / sine;
+
+	set_identity();
+
+	columns[0][0] = cotangent / p_aspect;
+	columns[1][1] = cotangent;
+	columns[2][2] = -(p_z_far + p_z_near) / deltaZ;
+	columns[2][3] = -1;
+	columns[3][2] = -2 * p_z_near * p_z_far / deltaZ;
+	columns[3][3] = 0;
+}
+```
