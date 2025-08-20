@@ -173,7 +173,7 @@ n & 0 & 0 & 0 \\
 \frac{2n}{r-l} & 0 & -\frac{r+l}{r-l} & 0 \\
 0 & \frac{2n}{t-b} & -\frac{t+b}{t-b} & 0 \\
 0 & 0 & \frac{n+f}{n-f} & -\frac{2nf}{n-f} \\
-0 & 0 & -1 & 0
+0 & 0 & 1 & 0
 \end{bmatrix}
 \end{align*}
 $$
@@ -187,7 +187,7 @@ $$
 
 $$
 \begin{align*}
-&\text{t} = \text{near} \times \tan\left(\frac{\text{fov}}{2}\right)
+&\text{t} = -n \times \tan\left(\frac{\text{fov}}{2}\right)
 \\
 &\text{b} = -\text{t}
 \\
@@ -206,10 +206,10 @@ $$
 \large
 \text{M}_\text{per} =
 \begin{bmatrix}
-\frac{1}{\text{aspect} \times \tan(\frac{\text{fov}}{2})} & 0 & 0 & 0 \\
-0 & \frac{1}{\tan(\frac{\text{fov}}{2})} & 0 & 0 \\
+-\frac{1}{\text{aspect} \times \tan(\frac{\text{fov}}{2})} & 0 & 0 & 0 \\
+0 & -\frac{1}{\tan(\frac{\text{fov}}{2})} & 0 & 0 \\
 0 & 0 & \frac{n+f}{n-f} & -\frac{2nf}{n-f} \\
-0 & 0 & -1 & 0
+0 & 0 & 1 & 0
 \end{bmatrix}
 $$
 
@@ -260,10 +260,10 @@ w_x & w_y & w_z & 0 \\
 \large
 &\text{M}_\text{per} =
 \begin{bmatrix}
-\frac{1}{\text{aspect} \times \tan(\frac{\text{fov}}{2})} & 0 & 0 & 0 \\
-0 & \frac{1}{\tan(\frac{\text{fov}}{2})} & 0 & 0 \\
+-\frac{1}{\text{aspect} \times \tan(\frac{\text{fov}}{2})} & 0 & 0 & 0 \\
+0 & -\frac{1}{\tan(\frac{\text{fov}}{2})} & 0 & 0 \\
 0 & 0 & \frac{n+f}{n-f} & -\frac{2nf}{n-f} \\
-0 & 0 & -1 & 0
+0 & 0 & 1 & 0
 \end{bmatrix}
 \\
 &\large
@@ -278,7 +278,9 @@ w_x & w_y & w_z & 0 \\
 \end{align*}
 $$
 
-要注意的是，我们讨论的 $n$ 和 $f$ 被定义为坐标值，它们是小于 0 的。一些地方把 $n$ 和 $f$ 定义为到近/远平面的距离，这是大于 0 的。我们的 $\text{M}_\text{per}$ 和他们的在某些项上有正负号的差异，他们的 $\text{M}_\text{their-per}$ 为：
+要注意的是，我们讨论的 $n$ 和 $f$ 被定义为坐标值，它们是小于 0 的。一些地方把 $n$ 和 $f$ 定义为到近/远平面的距离，这是大于 0 的，这会引起投影矩阵的变化。另外，不同的坐标系约定也会引起矩阵的变化。
+
+比如在OpenGL中， $n$ 和 $f$ 被定义为到近/远平面的距离，这是大于 0 的，而且他们的 projection transformation 把拍摄内容从右手坐标系的视图空间映射到左手坐标系的标准设备坐标（NDC）空间，他们的 $\text{M}_\text{their-per}$ 为：
 
 $$
 \large
@@ -286,12 +288,12 @@ $$
 \begin{bmatrix}
 \frac{1}{\text{aspect} \times \tan(\frac{\text{fov}}{2})} & 0 & 0 & 0 \\
 0 & \frac{1}{\tan(\frac{\text{fov}}{2})} & 0 & 0 \\
-0 & 0 & \frac{n+f}{n-f} & \frac{2nf}{n-f} \\
+0 & 0 & -\frac{f+n}{f-n} & -\frac{2fn}{f-n} \\
 0 & 0 & -1 & 0
 \end{bmatrix}
 $$
 
-Godot 把 $n$ 和 $f$ 定义为到近/远平面的距离，下面是他们设置 $\text{M}_\text{per}$ 的代码。还要注意的是，他们使用 column-major 的方法存储数据，即
+Godot 使用和 OpenGL 一样的矩阵，下面是他们设置 $\text{M}_\text{per}$ 的代码。还要注意的是，他们使用 column-major 的方法存储数据，即
 
 $$
 M =
