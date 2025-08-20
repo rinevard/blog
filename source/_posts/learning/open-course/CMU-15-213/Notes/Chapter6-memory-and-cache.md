@@ -14,11 +14,11 @@ categories:
 
 存储器有多种类型，我们可以根据访问速度把他们排成金字塔结构。靠近上面的访问速度快，靠近下面的访问速度慢。每一层都作为下面一层的缓存（cache），即从下面一层读取数据来加快访问速度：
 
-![](images/learning/open-course/CMU-15213/Notes/Chapter6/memory-hierarchy.png)
+![](/images/learning/open-course/CMU-15213/Notes/Chapter6/memory-hierarchy.png)
 
 下图比较了不同存储器的访问速度
 
-![](images/learning/open-course/CMU-15213/Notes/Chapter6/memory-mountain.png)
+![](/images/learning/open-course/CMU-15213/Notes/Chapter6/memory-mountain.png)
 
 # 局部性
 
@@ -30,13 +30,13 @@ categories:
 
 举个例子，一般来说，数组的局部性比链表好，因为链表的地址往往是碎片化的。
 
-![](images/learning/open-course/CMU-15213/Notes/Chapter6/cache-data-memory.png)
+![](/images/learning/open-course/CMU-15213/Notes/Chapter6/cache-data-memory.png)
 
 # 高速缓存
 
 高速缓存的结构如图所示：
 
-![](images/learning/open-course/CMU-15213/Notes/Chapter6/cache.png)
+![](/images/learning/open-course/CMU-15213/Notes/Chapter6/cache.png)
 
 让我们推测一下 line 和 set 是怎么设计出来的。
 
@@ -44,13 +44,13 @@ categories:
 
 显然我们不能预知未来，所以我们希望每次的数据交换都尽可能多带来一些“未来可能用到的数据”。所以我们把高速缓存划分成若干个 line，**每个 line 都存储一组连续的地址的数据**。毕竟如果读到了一个地址，有理由认为它附近的地址在将来会被读到。
 
-![](images/learning/open-course/CMU-15213/Notes/Chapter6/cache-line.png)
+![](/images/learning/open-course/CMU-15213/Notes/Chapter6/cache-line.png)
 
 上图给出了 line 的可视化，我们把数据存储在 data 段中，共存储 B 个 bytes.
 
 但只是读取连续的一段是不够的。在下图中，我们把主存中需要用到的地址标红。这两种情况中，我们认为右边那种情况更可能在运行时发生，所以我们希望实现多个 set. 如果每个 set 只有一个 line，就实现了**直接映射高速缓存**。如果每个 set 有多个 line，就实现了**组相联高速缓存**。
 
-![](images/learning/open-course/CMU-15213/Notes/Chapter6/cache-set.png)
+![](/images/learning/open-course/CMU-15213/Notes/Chapter6/cache-set.png)
 
 ## 读
 
@@ -58,7 +58,7 @@ categories:
 
 这里的思路是根据地址找到高速缓冲中对应的 set，然后检查 set 的 line 中是否有当前地址。
 
-![](images/learning/open-course/CMU-15213/Notes/Chapter6/cache-read.png)
+![](/images/learning/open-course/CMU-15213/Notes/Chapter6/cache-read.png)
 
 我们把每个地址划分为三个部分，tag 部分、组索引部分、偏移部分。**组索引部分**在中间，耗费 $\log_2 S$ 个位，用于**定位对应的组**；**tag 部分**在最前，占据地址剩下的位置，用于和每个 line 的 tag 作比较从而**确定是否有与地址对应的 line**；**偏移部分**在最后，耗费 $\log_2 B$ 个位，用于在找到对应的 line 以后**找到对应的数据位置**。
 
@@ -80,7 +80,7 @@ categories:
 
 ## Memory Mountain——数组大小和访问步长影响性能
 
-![](images/learning/open-course/CMU-15213/Notes/Chapter6/memory-mountain.png)
+![](/images/learning/open-course/CMU-15213/Notes/Chapter6/memory-mountain.png)
 
 这张图是对一个大小为 size 的数组以 stride 为步长求和的性能比较。
 
@@ -132,7 +132,7 @@ for (i=0; i<n; i++) {
 
 下图展示了六种循环顺序带来的不同效率：
 
-![](images/learning/open-course/CMU-15213/Notes/Chapter6/matrix-order.png)
+![](/images/learning/open-course/CMU-15213/Notes/Chapter6/matrix-order.png)
 
 最好的是 ikj 循环，我们可以简单地算出它的大概的总不命中次数。共有 $n^2$ 个值要算，没算一个值大概会不命中 $\frac{n}{K}
 
@@ -147,7 +147,7 @@ $$
 
 其实我们还有更好的优化手段——矩阵分块乘法：
 
-![](images/learning/open-course/CMU-15213/Notes/Chapter6/matrix-blocking.png)
+![](/images/learning/open-course/CMU-15213/Notes/Chapter6/matrix-blocking.png)
 
 结果里的每个 block 的计算需要访问 $\frac{2n}{B}$ 个小 blck，每个小 block 大概会不命中 $\frac{B^2
 }{K}$ 次，因此总不命中次数大约为：

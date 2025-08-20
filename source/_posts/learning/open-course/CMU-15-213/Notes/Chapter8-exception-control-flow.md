@@ -33,7 +33,7 @@ img{
 
 异常发生后，控制会转移给异常处理程序。在处理完成后，根据异常的具体内容可能会返回到原程序的下一条指令，也可能返回到原程序的当前指令，也可能不返回。：
 
-![](images/learning/open-course/CMU-15213/Notes/Chapter8/exception-control-shift.png)
+![](/images/learning/open-course/CMU-15213/Notes/Chapter8/exception-control-shift.png)
 
 # **进程**
 
@@ -41,13 +41,13 @@ img{
 
 我们可以并发地执行多个进程，如下图所示：
 
-![](images/learning/open-course/CMU-15213/Notes/Chapter8/concurrency.png)
+![](/images/learning/open-course/CMU-15213/Notes/Chapter8/concurrency.png)
 
 但我们是怎么实现这种并发的呢？答案是上下文切换。下图展现了单核 CPU 的上下文切换，每个进程都有自己的上下文。
 
 上下文切换的原因多种多样，举两个常见例子：用户可能执行系统调用而等待某个事件（比如用 waitpid 等待子进程终止），这时内核就可以让当前进程休眠并切换到另一个进程；系统每隔若干毫秒也会产生一次定时器中断的异常，并切换到新的进程。
 
-![](images/learning/open-course/CMU-15213/Notes/Chapter8/content-change.png)
+![](/images/learning/open-course/CMU-15213/Notes/Chapter8/content-change.png)
 
 ## 进程的创建、终止和回收
 

@@ -40,13 +40,13 @@ attacklab 的攻击主要分为植入攻击代码和 ROP 攻击。
 
 使用`./ctarget -q < evil`来运行，因为我们不能连接到 CMU 服务器（唉，CMU）.
 
-![](images/learning/open-course/CMU-15213/Labs/Attacklab/evil.jpg)
+![](/images/learning/open-course/CMU-15213/Labs/Attacklab/evil.jpg)
 
 ### 攻击 2
 
 攻击 2 就是典型的“植入攻击代码”了。一开始我的思路如下图：
 
-![](images/learning/open-course/CMU-15213/Labs/Attacklab/attack2.png)
+![](/images/learning/open-course/CMU-15213/Labs/Attacklab/attack2.png)
 
 这确实能跑，也确实顺利执行了 touch2，但执行完之后发生了**segmentation fault**！这是为什么？**我至今没有搞清楚**，如果有朋友知道可以跟我说一下。但我可以排除一些疑点。
 
@@ -58,7 +58,7 @@ segmentation fault 的发生**大概率是因为栈指针没有对齐**。给能
 
 回到攻击 2，既然我们猜测是栈指针对齐问题，只要让它对齐就行了。我们微调一下，通过 push 让栈指针的位置偏移 8，然后就通过了。
 
-![](images/learning/open-course/CMU-15213/Labs/Attacklab/attack2_2.png)
+![](/images/learning/open-course/CMU-15213/Labs/Attacklab/attack2_2.png)
 
 ### 攻击 3
 
@@ -66,7 +66,7 @@ segmentation fault 的发生**大概率是因为栈指针没有对齐**。给能
 
 作业 PDF 里还提到，"Make position of check string unpredictable"。这有什么意义？我猜是为了防止我们把 sval 指向 cbuf 来实现攻击，这或许不符合 attacklab 的世界观，因为连字符串都不用注入了。
 
-![](images/learning/open-course/CMU-15213/Labs/Attacklab/attack3.png)
+![](/images/learning/open-course/CMU-15213/Labs/Attacklab/attack3.png)
 
 ## ROP 攻击
 
@@ -83,7 +83,7 @@ segmentation fault 的发生**大概率是因为栈指针没有对齐**。给能
 
 回到题目上来，根据提示，我们要用 mov，pop，ret，那么思路是写入 cookie 到栈中，pop 它到某个地方（addval_219 有 pop %rax），最后移动到 rdi 中（addval_273 有 movl %eax %edi）
 
-![](images/learning/open-course/CMU-15213/Labs/Attacklab/attack4.png)
+![](/images/learning/open-course/CMU-15213/Labs/Attacklab/attack4.png)
 
 我们在攻击 2 里已经讨论过 segmentation fault 的发生原因，最合理的猜测是栈指针的对齐问题。所以如果发生了 segmentation fault，找个 ret 再用一下就行了。
 
@@ -91,4 +91,4 @@ segmentation fault 的发生**大概率是因为栈指针没有对齐**。给能
 
 没做，we bad people can do whatever we want！
 
-![](images/learning/open-course/CMU-15213/Labs/Attacklab/neuro.jpg)
+![](/images/learning/open-course/CMU-15213/Labs/Attacklab/neuro.jpg)

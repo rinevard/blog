@@ -16,7 +16,7 @@ img{
 }
 </style>
 
-![](images/learning/open-course/CMU-15213/Notes/Chapter3/st.png)
+![](/images/learning/open-course/CMU-15213/Notes/Chapter3/st.png)
 
 # 汇编简介
 
@@ -24,11 +24,11 @@ CSAPP 教的是 x86-64 汇编语言，使用的是 AT&T 语法风格。
 
 下图概述了程序的工作方式，即从内存中读取指令，CPU 根据指令在寄存器上执行操作来修改内存里的数据：
 
-![](images/learning/open-course/CMU-15213/Notes/Chapter3/cpu-memory.png)
+![](/images/learning/open-course/CMU-15213/Notes/Chapter3/cpu-memory.png)
 
 下图描述了借助 gcc 进行编译的过程，其中 .s 就是汇编文件：
 
-![](images/learning/open-course/CMU-15213/Notes/Chapter3/compile.png)
+![](/images/learning/open-course/CMU-15213/Notes/Chapter3/compile.png)
 
 一些汇编指令示例：
 
@@ -44,7 +44,7 @@ CSAPP 教的是 x86-64 汇编语言，使用的是 AT&T 语法风格。
 
 我们可以注意到这些操作都以 ‘q’ 结尾，那如果我不喜欢 ‘q’，我可以用 ‘r’ 结尾吗？不行，因为这里的 ‘q’ 实际上是在指定操作的大小。还记得寄存器长什么样吗：
 
-![](images/learning/open-course/CMU-15213/Notes/Chapter3/register-rax.png)
+![](/images/learning/open-course/CMU-15213/Notes/Chapter3/register-rax.png)
 
 | 后缀 | 全称     | 大小(字节) | 位数  | 指令示例 | 描述                 |
 | ---- | -------- | ---------- | ----- | -------- | -------------------- |
@@ -138,7 +138,7 @@ cmpl    $2, %eax                        # 检查是否超出范围(>2), 这里%e
 
 啊哈哈，我们又要讨论寄存器了。还记得 %rsp 吗？它就是存储栈指针的寄存器。下图左边是栈的结构，右边是寄存器：
 
-![](images/learning/open-course/CMU-15213/Notes/Chapter3/st.png)
+![](/images/learning/open-course/CMU-15213/Notes/Chapter3/st.png)
 
 那么，栈和函数有什么关系呢？
 
@@ -183,7 +183,7 @@ cmpl    $2, %eax                        # 检查是否超出范围(>2), 这里%e
 
 先说 Array，二维 array 如下图：
 
-![](images/learning/open-course/CMU-15213/Notes/Chapter3/array.png)
+![](/images/learning/open-course/CMU-15213/Notes/Chapter3/array.png)
 
 简单易懂。假设我们有 T A[R][C]，那么&D[i][j] = x0 + L(C \* i + j). 其中 x0 为数组的起始地址，L 是 sizeof(T). 编译器在寻址时也就是这么做的。不过编译器会做一些聪明的优化来避免乘法，比如用 leaq 来加快计算：
 
@@ -207,7 +207,7 @@ struct rec {
 };
 ```
 
-![](images/learning/open-course/CMU-15213/Notes/Chapter3/struct.png)
+![](/images/learning/open-course/CMU-15213/Notes/Chapter3/struct.png)
 
 上图中，12 到 16 的“填充”是出于数据对齐的需要，对齐原则是——任何 K 字节的基本对象的地址必须是 K 的倍数。
 
@@ -222,7 +222,7 @@ struct rec {
 
 union 允许我们用不同方式解释同一段位表示，常用于节省内存。
 
-![](images/learning/open-course/CMU-15213/Notes/Chapter3/union.png)
+![](/images/learning/open-course/CMU-15213/Notes/Chapter3/union.png)
 
 最常见的应用是，union 中的东西互斥，比如实现比较基础的动态类型：
 

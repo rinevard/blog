@@ -137,7 +137,7 @@ for (i = cnt-2; i >= 0; i--)
 
 按照 IEEE 标准，浮点数的表示如下：
 
-![](images/learning/open-course/CMU-15213/Notes/Chapter2/float-representation.png)
+![](/images/learning/open-course/CMU-15213/Notes/Chapter2/float-representation.png)
 
 其中 s 是符号位，0 表示正数，1 表示负数
 
@@ -161,7 +161,7 @@ $$
 
 看起来确实是很奇怪的标准！这涌现出的结果是，能表示的值在靠近 0 的位置比较密集，在远离 0 的位置比较稀疏。（下图以 exp 占 3 bits，frac 占 2 bits 为例）
 
-![](images/learning/open-course/CMU-15213/Notes/Chapter2/float-line.png)
+![](/images/learning/open-course/CMU-15213/Notes/Chapter2/float-line.png)
 
 ## 舍入（四舍五入）
 
@@ -229,7 +229,7 @@ int → double：精确转换，毕竟 double 的 frac 有 52 个 bits，能够�
 
 多字节对象在内部存储的字节顺序表示上也有大端法和小端法之分，即最高有效字节在前面还是后面。比如把十六进制的 0x01234567 存储为 01 23 45 67 还是 67 45 23 01。
 
-![](images/learning/open-course/CMU-15213/Notes/Chapter2/endian.png)
+![](/images/learning/open-course/CMU-15213/Notes/Chapter2/endian.png)
 
 我们可以用下面的代码检查自己的机器使用的是大端法还是小端法。
 

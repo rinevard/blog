@@ -108,11 +108,11 @@ int main(int argc, char *argv[]) {
 
 ### **open两次：**
 
-![](images/learning/open-course/MIT-6.S081/notes/note1-syscall/opentwice.png)
+![](/images/learning/open-course/MIT-6.S081/notes/note1-syscall/opentwice.png)
 
 ### **fork：**
 
-![](images/learning/open-course/MIT-6.S081/notes/note1-syscall/fork.png)
+![](/images/learning/open-course/MIT-6.S081/notes/note1-syscall/fork.png)
 
 # 管道
 

@@ -80,7 +80,7 @@ $$
 \mathbf{k}(\mathbf{k} \cdot \mathbf{v})(1 - \cos\theta)
 $$
 
-![](images/learning/open-course/GAMES101/Notes/note1/rodrigues.png)
+![](/images/learning/open-course/GAMES101/Notes/note1/rodrigues.png)
 
 当然也可以把这个旋转矩阵写出来：
 
@@ -94,11 +94,11 @@ $$
 
 2D 和 3D transformation 都是基础变换，接下来我们研究游戏里的画面是如何渲染到屏幕上的。
 
-![](images/learning/open-course/GAMES101/Notes/note1/map-seq.png)
+![](/images/learning/open-course/GAMES101/Notes/note1/map-seq.png)
 
 如下图所示，我们有一个摄像机、两个方块，那么我们是怎么计算出摄像机拍摄的画面的呢（参考右下角）？
 
-![](images/learning/open-course/GAMES101/Notes/note1/godot-camera.png)
+![](/images/learning/open-course/GAMES101/Notes/note1/godot-camera.png)
 
 
 我们按照下面的流程进行操作：
@@ -134,11 +134,11 @@ $$
 
 下图能清晰地解释 fov 和 aspect ratio。fov 即 field of view，表示用角度衡量的可见范围；aspect ratio 则是显示区域的宽高比。
 
-![](images/learning/open-course/GAMES101/Notes/note1/fov-and-aspect-ratio.png)
+![](/images/learning/open-course/GAMES101/Notes/note1/fov-and-aspect-ratio.png)
 
 near 和 far 则定义了剔除边界，我们只渲染满足 $z \in [\text{near}, \text{far}]$ 的东西。原点、近平面和原平面共同划分出了一块有限的空间，这就是摄像机拍摄的区域（视锥），我们会把他变换到 $[-1,1]^3$ 中。
 
-![](images/learning/open-course/GAMES101/Notes/note1/near-far.png)
+![](/images/learning/open-course/GAMES101/Notes/note1/near-far.png)
 
 在变换时，我们希望满足以下两点：
 
@@ -180,7 +180,7 @@ $$
 
 第一个等号右边的式子中，右边的矩阵把视锥压缩为一个长方体，左边的矩阵把这个长方体变换到 $[-1,1]^3$.
 
-![](images/learning/open-course/GAMES101/Notes/note1/rectangle.png)
+![](/images/learning/open-course/GAMES101/Notes/note1/rectangle.png)
 
 我们可以根据 $\text{near},\text{fov},\text{aspectRatio
 }$ 求出 $l,t,r,b$.
@@ -198,7 +198,7 @@ $$
 \end{align*}
 $$
 
-![](images/learning/open-course/GAMES101/Notes/note1/fov-ltrb.png)
+![](/images/learning/open-course/GAMES101/Notes/note1/fov-ltrb.png)
 
 也就是说，我们可以把投影矩阵写为：
 

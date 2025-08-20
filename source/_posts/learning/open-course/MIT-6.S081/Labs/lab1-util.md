@@ -105,13 +105,13 @@ int main() {
 
 这题很有趣，是一个并发素数筛法。这个算法理论上是可以提高效率的，毕竟在运行了一段时间后，各个进程里都有一些数等待筛选，这时各个进程在同时用自己的素数筛选输入的数。
 
-![](images/learning/open-course/MIT-6.S081/labs/lab1-util/prime-concurrent.png)
+![](/images/learning/open-course/MIT-6.S081/labs/lab1-util/prime-concurrent.png)
 
 网上很多代码都是2020版的，当时的要求是找出 2-35 间的素数。这些代码能过老版本的要求，但过不了2024版要求的 2-280。我认真看了一两份代码，发现它们在用 fork 创建子进程的子进程后，忘了关闭子子进程的连接到父进程的描述符。可以看下面示意图的第三个框，这些代码忘了关闭 child child process 的 fd_read.
 
 我画了示意图来解释我的代码~
 
-![](images/learning/open-course/MIT-6.S081/labs/lab1-util/prime-code.png)
+![](/images/learning/open-course/MIT-6.S081/labs/lab1-util/prime-code.png)
 
 ```c
 #include "kernel/types.h"

@@ -46,7 +46,7 @@ HLT             ; 停止程序
 
 把虚拟地址翻译成物理地址的大致思路是根据虚拟地址找到页表中对应的项，从而找到对应的物理页，然后根据虚拟地址的最后几位确定具体的物理地址。（还记得吗，一个页由很多地址组成）
 
-![](images/learning/open-course/CMU-15213/Notes/Chapter9/singlelvelpagetable.png)
+![](/images/learning/open-course/CMU-15213/Notes/Chapter9/singlelvelpagetable.png)
 
 但这样的页表还是很大吧。我们总在进程被创建时就为他们分配了一个超大的页表，而实际上绝大多数程序都根本用不到那么多虚拟地址。所以，我们能不能动态地改变页表的大小，比如说，在程序请求某个虚拟地址，但它不在页表中时，再去增大页表？
 
@@ -54,7 +54,7 @@ HLT             ; 停止程序
 
 在这样的**多级页表**中，只有 level 最高的页表存储对应页的开头物理地址，而其他 level 的页表存储下一个级别的页表的开始地址。我们会在下一节详细讲解它的翻译过程。
 
-![](images/learning/open-course/CMU-15213/Notes/Chapter9/twolevelpagetable.png)
+![](/images/learning/open-course/CMU-15213/Notes/Chapter9/twolevelpagetable.png)
 
 让我们总结一下，每个进程有自己的页表，在切换到某个进程时，操作系统会更新存储着页表地址的寄存器（在 RISC-Ⅴ 中是 satp 寄存器）。当进程需要访问某个虚拟地址时，MMU 会把虚拟地址翻译成物理地址，然后访问物理地址。
 
@@ -70,11 +70,11 @@ HLT             ; 停止程序
 
 VPN 是 virtual page number，VPO 是 virtual page offset，PTE 是 page table entry
 
-![](images/learning/open-course/CMU-15213/Notes/Chapter9/translation.png)
+![](/images/learning/open-course/CMU-15213/Notes/Chapter9/translation.png)
 
 我魔改了一下上图，希望这能让“每个 level 有多个页表”这件事显得更清晰。
 
-![](images/learning/open-course/CMU-15213/Notes/Chapter9/virtual2physic.png)
+![](/images/learning/open-course/CMU-15213/Notes/Chapter9/virtual2physic.png)
 
 ## 优化
 
@@ -100,4 +100,4 @@ VPN 是 virtual page number，VPO 是 virtual page offset，PTE 是 page table e
 
 举个例子，使用显式链表策略时，我们的堆大概长这样：
 
-![](images/learning/open-course/CMU-15213/Notes/Chapter9/heap.svg)
+![](/images/learning/open-course/CMU-15213/Notes/Chapter9/heap.svg)

@@ -94,7 +94,7 @@ CPE = Total Cycles / Number of Elements，即总周期数 / 元素数量。
 
 流水线将单条指令的执行阶段（取指、解码、执行、访存、写回）拆分成多个步骤，每个步骤由不同的硬件单元处理，从而可以同时处理多条处于不同步骤的指令。例如，一个典型的浮点加法器包含三个阶段：一个阶段处理指数值，一个阶段将小数相加，另一个阶段对结果进行舍人。这种技术**增加了吞吐量（Throughput）**，但单个指令的执行延迟并不会减少。
 
-![](images/learning/open-course/CMU-15213/Notes/Chapter5/pipeline.png)
+![](/images/learning/open-course/CMU-15213/Notes/Chapter5/pipeline.png)
 
 ## 数据流图
 
@@ -132,7 +132,7 @@ double polyh(double a[], double x, long degree)
 
 然而实际上 poly 速度更快，为什么呢？因为 poly 有更好的指令级并行度。
 
-![](images/learning/open-course/CMU-15213/Notes/Chapter5/dataflow.png)
+![](/images/learning/open-course/CMU-15213/Notes/Chapter5/dataflow.png)
 
 poly 的关键路径是 mul，polyh 的关键路径则是 mul → add.
 

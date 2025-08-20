@@ -98,11 +98,11 @@ int main() {
 
 ### **open 两次：**
 
-![](images/learning/open-course/CMU-15213/Notes/Chapter10/opentwice.png)
+![](/images/learning/open-course/CMU-15213/Notes/Chapter10/opentwice.png)
 
 ### **fork：**
 
-![](images/learning/open-course/CMU-15213/Notes/Chapter10/fork.png)
+![](/images/learning/open-course/CMU-15213/Notes/Chapter10/fork.png)
 
 # 基于缓冲区的读写
 
