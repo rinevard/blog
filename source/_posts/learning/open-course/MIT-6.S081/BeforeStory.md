@@ -4,7 +4,6 @@ toc: true
 date: 2025-05-27 15:20:38
 tags:
 categories:
-  - 学习
   - 公开课
   - MIT-6.S081
 ---

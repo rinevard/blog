@@ -4,7 +4,6 @@ toc: true
 date: 2025-02-21 20:14:28
 tags:
 categories:
-  - 学习
   - 公开课
   - CMU-15-213
   - Labs
