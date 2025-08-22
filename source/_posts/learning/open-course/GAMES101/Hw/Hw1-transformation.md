@@ -1,5 +1,5 @@
 ---
-title: Hw 1 Transformation
+title: Assignment 1 Transformation
 toc: true
 date: 2025-08-22 11:00:58
 tags:
@@ -7,7 +7,7 @@ categories:
   - 学习
   - 公开课
   - GAMES101
-  - Hw
+  - Assignments
 ---
 
 本次作业要求我们实现旋转矩阵、投影矩阵。我们先简单看下作业是怎么做的，再看看代码框架里的几个有趣的地方。
