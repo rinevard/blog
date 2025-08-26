@@ -218,7 +218,7 @@ $$
 
 ![](/images/learning/open-course/GAMES101/Notes/note2/sample-origin.png)
 
-我们之前说过，可以把连续函数的均匀间隔采样表示为冲激串 $s\_{T}(x)=\sum\_{n}^{\infty}\delta(x-nT)$ 和原函数 $f$ 的乘积，而我们也已经知道冲激串的傅里叶变换还是冲激串
+我们之前说过，可以把连续函数的均匀间隔采样表示为冲激串 $s\_{T}(x)=\sum\_{n=-\infty}^{\infty}\delta(x-nT)$ 和原函数 $f$ 的乘积，而我们也已经知道冲激串的傅里叶变换还是冲激串
 
 $$
 \hat s_T(u)=\frac{1}{T}\sum_{n=-\infty}^{\infty}\delta(u-\frac{n}{T})
