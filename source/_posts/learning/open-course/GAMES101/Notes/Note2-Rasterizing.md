@@ -45,7 +45,10 @@ foreach (Triangle triangle in triangles) {
 
 # 数学知识
 
-为了不让文章太长，这里我们省略所有的证明。不过所有的证明都并不困难，有空的话可以自己证一下试试。
+为了不让文章太长，这里我们省略所有的证明。不过所有的证明都并不困难，有空的话可以自己证一下试试。在开始之前，我们会问：这些数学知识有用吗？
+
+> In a word, mostly no, sometimes yes, and occasionally, maybe.
+> — https://www.dgp.toronto.edu/public_user/elf/2522/sampling.pdf
 
 ## 卷积
 
