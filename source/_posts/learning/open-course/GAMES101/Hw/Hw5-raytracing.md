@@ -46,8 +46,8 @@ for (int i = 0; i < scene.width; ++i)
     // and map y from [0, scene.height - 1] to [screen_height / 2, -screen_height / 2]
     float screen_height = 2 * scale;
     float screen_width = imageAspectRatio * screen_height;    
-    x = (screen_width / (scene.width - 1)) * i - (screen_width / 2.0) - eye_pos.x;
-    y = (-screen_height / (scene.height - 1)) * j + (screen_height / 2.0) - eye_pos.y;
+    x = (screen_width / (scene.width - 1)) * (i + 0.5) - (screen_width / 2.0);
+    y = (-screen_height / (scene.height - 1)) * (j + 0.5) + (screen_height / 2.0);
     Vector3f dir = normalize(Vector3f(x, y, -1)); // Don't forget to normalize this direction!
     framebuffer[m++] = castRay(eye_pos, dir, scene, 0);
 }
