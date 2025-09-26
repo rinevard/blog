@@ -38,7 +38,9 @@ Vector3f reflectionColor = castRay(reflectionRayOrig, reflectionDirection, scene
 Vector3f refractionColor = castRay(refractionRayOrig, refractionDirection, scene, depth + 1);
 ```
 
-代码里还考虑了菲涅尔效应来计算反射和折射的比例。菲涅尔效应的公式有点复杂，我们就不讲解了。这里的 `kr` 就是菲涅尔方程算出的反射系数，`hitColor` 就是这个点的最终颜色：
+代码里还考虑了菲涅尔效应来计算反射和折射的比例。菲涅尔效应的公式有点复杂，我们就不讲解了。这里的 `kr` 就是菲涅尔方程算出的反射系数，而由能量守恒，折射系数就是 $1-\text{kr}$。
+
+`hitColor` 就是这个点的最终颜色：
 
 ```cpp
 float kr = fresnel(dir, N, payload->hit_obj->ior);
