@@ -104,7 +104,7 @@ Vector3f Scene::castRay(const Ray &ray, int depth) const
 
 # 代码细节
 
-接下来我们再聊聊具体的代码细节。自发光项比较简单，我们掠过。
+接下来我们再聊聊具体的代码细节。自发光项比较简单，我们略过。
 
 ## $L_\text{direct}$
 
