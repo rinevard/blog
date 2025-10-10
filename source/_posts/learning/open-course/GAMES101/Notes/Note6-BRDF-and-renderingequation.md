@@ -168,7 +168,6 @@ $$
 
 $$
 L_o(p, \vec{\omega_o}) \approx L_e(p, \vec{\omega_o}) + 
-
 \frac{1}{N}\sum_{k=1}^{N}\frac{f_r(p, \vec{\omega_i}^{(k)}, \vec{\omega_o}) L_o(\text{raycast}(p, -\vec{\omega_i}^{(k)}), -\vec{\omega_i}^{(k)}) (\vec{\omega_i} ^{(k)}\cdot n) }
 {p(\vec{\omega_i}^{(k)})}
 $$
