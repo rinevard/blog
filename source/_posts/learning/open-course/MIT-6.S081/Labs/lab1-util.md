@@ -1,5 +1,5 @@
 ---
-title: Lab1 Xv6 and Unix utilities
+title: Lab 1 Xv6 and Unix utilities
 toc: true
 date: 2025-05-31 11:18:38
 tags:
