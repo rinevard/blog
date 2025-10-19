@@ -23,7 +23,7 @@ ECALL 会触发一个异常，如果我们在用户态触发这个异常，程�
 
 以下是 risc-v 手册对 stvec 寄存器的简介：
 
-![](/images/learning/open-course/MIT-6.S081/Labs/lab2_1-syscall_process/stvec.png)
+![](/images/learning/open-course/MIT-6.S081/labs/lab2_1-syscall_process/stvec.png)
 
 BASE是4字节对齐的（RISC-V 手册 P80），所以在MODE == 0时，我们跳转到的地址是 `(stvec >> 2) << 2`，而由于 MODE == 0，这个值就是 stvec ；在MODE == 1时，我们转到的地址是 `(stvec >> 2) << 2 + 4*cause`
 
@@ -35,7 +35,7 @@ BASE是4字节对齐的（RISC-V 手册 P80），所以在MODE == 0时，我们�
 
 观察右边的终端可以看到shell已经成功启动了。
 
-![](/images/learning/open-course/MIT-6.S081/Labs/lab2_1-syscall_process/debug_start.png)
+![](/images/learning/open-course/MIT-6.S081/labs/lab2_1-syscall_process/debug_start.png)
 
 然后我们在gdb里按下ctrl+c来中断，并用 `b main` 设置断点，再使用 `layout split` 让gdb显示出源码和汇编代码。接下来我们在gdb里输入 `c` 以让xv6继续执行，否则xv6的shell会处于暂停状态，不能处理输入。
 
@@ -43,23 +43,23 @@ BASE是4字节对齐的（RISC-V 手册 P80），所以在MODE == 0时，我们�
 
 观察左边的gdb，可以看到它停在了sleep.c的main函数。
 
-![](/images/learning/open-course/MIT-6.S081/Labs/lab2_1-syscall_process/sleep_main.png)
+![](/images/learning/open-course/MIT-6.S081/labs/lab2_1-syscall_process/sleep_main.png)
 
 随便执行一下直到到达sleep这行，`n` 表示执行一行c语言，`si`表示执行一个汇编语句。
 
-![](/images/learning/open-course/MIT-6.S081/Labs/lab2_1-syscall_process/sleep_jal_atoi.png)
+![](/images/learning/open-course/MIT-6.S081/labs/lab2_1-syscall_process/sleep_jal_atoi.png)
 
 我们用`si`进入atoi，然后交替着用`n`和`si`，在快到return时用`si`，就能离开atoi回到sleep.c。
 
 观察左边的gdb，和上图相比，虽然c语言的位置没有变化，但汇编代码的位置是有变化的。
 
-![](/images/learning/open-course/MIT-6.S081/Labs/lab2_1-syscall_process/sleep_jal_sleep.png)
+![](/images/learning/open-course/MIT-6.S081/labs/lab2_1-syscall_process/sleep_jal_sleep.png)
 
 之后用`si`，会发现我们跳转到了 `usys.S`，它把sleep的系统调用号放到寄存器a7里，然后借助ecall来执行系统调用。
 
 观察左边的gdb发现我们已经进入了`usys.S`
 
-![](/images/learning/open-course/MIT-6.S081/Labs/lab2_1-syscall_process/usys_enter.png)
+![](/images/learning/open-course/MIT-6.S081/labs/lab2_1-syscall_process/usys_enter.png)
 
 如果我们直接用几个`si`，会发现`ecall`并没有像`jal`之类的跳转语句一样带我们到一些神奇的地方，而是直接到了下一行。这是因为`ecall`不是跳转，而是抛出了一个异常，内核自动处理了异常。
 
@@ -67,17 +67,17 @@ BASE是4字节对齐的（RISC-V 手册 P80），所以在MODE == 0时，我们�
 
 观察左边的gdb，发现stvec的值是 0x3ffffff000，至少在我这里是这样。
 
-![](/images/learning/open-course/MIT-6.S081/Labs/lab2_1-syscall_process/print_stvec.png)
+![](/images/learning/open-course/MIT-6.S081/labs/lab2_1-syscall_process/print_stvec.png)
 
 回顾一下stvec寄存器的结构和功能，会发现执行ecall后，pc会跳转到BASE所在的地址。我们之前说过，BASE是4字节对齐的（RISC-V 手册 P80），所以在MODE == 0时，我们跳转到的地址是 `(stvec >> 2) << 2`，而由于 MODE == 0，这个值就是 stvec。
 
-![](/images/learning/open-course/MIT-6.S081/Labs/lab2_1-syscall_process/stvec.png)
+![](/images/learning/open-course/MIT-6.S081/labs/lab2_1-syscall_process/stvec.png)
 
 我们接下来把断点设置在这个值，然后用`si`到达`ecall`语句处
 
 观察左边的gdb，我们现在已经在`ecall`这里了。
 
-![](/images/learning/open-course/MIT-6.S081/Labs/lab2_1-syscall_process/break_ecall_target.png)
+![](/images/learning/open-course/MIT-6.S081/labs/lab2_1-syscall_process/break_ecall_target.png)
 
 如果我们的操作正确，接下来的`si`会触发一个异常导致我们跳转到 0x3ffffff000 并触发断点，希望我们没有翻车~
 
@@ -85,7 +85,7 @@ BASE是4字节对齐的（RISC-V 手册 P80），所以在MODE == 0时，我们�
 
 按我的理解，由于我们在U-mode下执行ecall以触发异常，所以我们现在已经进入了S-mode。不过我翻了很多资料还是没有找到能明确支持这一点的证据（也没有找到明确反对的证据），所以我保留我的观点。
 
-![](/images/learning/open-course/MIT-6.S081/Labs/lab2_1-syscall_process/ecall.png)
+![](/images/learning/open-course/MIT-6.S081/labs/lab2_1-syscall_process/ecall.png)
 
 总之一切顺利！让我们暂停一下，想想这个 0x3ffffff000 的地址代表什么。在内核启动时通过`file kernel/kernel` 加载内核符号表并在`usertrapret`设置断点，我们可以发现 0x3ffffff000 这个地址和 `kernel/trap.c` 里的`trampoline_uservec` 相等。
 
@@ -97,7 +97,7 @@ trampoline是什么？trampoline是在进程虚拟内存的顶部的一块空间
 
 嗯，这样就能对上了！
 
-![](/images/learning/open-course/MIT-6.S081/Labs/lab2_1-syscall_process/trapoline_enter.png)
+![](/images/learning/open-course/MIT-6.S081/labs/lab2_1-syscall_process/trapoline_enter.png)
 
 读一读trampoline.S，我们发现它会把用户进程的寄存器等信息保存到trapframe里，然后跳转到内核的usertrap函数。
 
@@ -105,11 +105,11 @@ trampoline是什么？trampoline是在进程虚拟内存的顶部的一块空间
 
 比较左边和右边，发现它们的汇编代码确实能对上，接下来我们要准备跳转了。
 
-![](/images/learning/open-course/MIT-6.S081/Labs/lab2_1-syscall_process/trapoline_jump.png)
+![](/images/learning/open-course/MIT-6.S081/labs/lab2_1-syscall_process/trapoline_jump.png)
 
 陷阱，启动！
 
-![](/images/learning/open-course/MIT-6.S081/Labs/lab2_1-syscall_process/usertrap_enter.png)
+![](/images/learning/open-course/MIT-6.S081/labs/lab2_1-syscall_process/usertrap_enter.png)
 
 如果你发现你的gdb没有顺利显示出c语言代码，可能是你忘记切换符号表到内核了，用`file kernel/kernel`来切换，然后补一个`si`就能显示出来了。
 
@@ -117,17 +117,17 @@ trampoline是什么？trampoline是在进程虚拟内存的顶部的一块空间
 
 比较左边和右边的代码，它们是能对应上的。接下来让我们准备进入`syscall`
 
-![](/images/learning/open-course/MIT-6.S081/Labs/lab2_1-syscall_process/usertrap_jump.png)
+![](/images/learning/open-course/MIT-6.S081/labs/lab2_1-syscall_process/usertrap_jump.png)
 
 我们用`s`进入syscall函数。`n`和`s`都会执行当前行，不过如果当前行是函数，`n`不会进入函数，而`s`会。
 
-![](/images/learning/open-course/MIT-6.S081/Labs/lab2_1-syscall_process/syscall_enter.png)
+![](/images/learning/open-course/MIT-6.S081/labs/lab2_1-syscall_process/syscall_enter.png)
 
 syscall函数从trapframe中取出系统调用号，然后调用它。还记得吗，我们调用系统函数时先进入了usys.S，然后把系统调用号保存到了a7。之后由于我们转入了内核，我们在trapoline.S里把所有的用户空间的寄存器都保存到了trapframe中。
 
 总之我们在这里调用了sys_sleep，我们进入它看看。
 
-![](/images/learning/open-course/MIT-6.S081/Labs/lab2_1-syscall_process/syssleep_enter.png)
+![](/images/learning/open-course/MIT-6.S081/labs/lab2_1-syscall_process/syssleep_enter.png)
 
 可以发现它就是真正干活的地方！它非常忠实地执行了sleep的逻辑。
 
@@ -135,11 +135,11 @@ syscall函数从trapframe中取出系统调用号，然后调用它。还记得�
 
 让我们继续往后，看看在执行完逻辑以后发生了什么吧。
 
-![](/images/learning/open-course/MIT-6.S081/Labs/lab2_1-syscall_process/syssleep_return.png)
+![](/images/learning/open-course/MIT-6.S081/labs/lab2_1-syscall_process/syssleep_return.png)
 
 回到`usertrap`，我们一路往下到达`usertrapret`，然后用`s`进入它。
 
-![](/images/learning/open-course/MIT-6.S081/Labs/lab2_1-syscall_process/usertrapret_enter.png)
+![](/images/learning/open-course/MIT-6.S081/labs/lab2_1-syscall_process/usertrapret_enter.png)
 
 看函数名上面的注释就能发现它会带我们回到用户空间。
 
@@ -149,17 +149,17 @@ syscall函数从trapframe中取出系统调用号，然后调用它。还记得�
 
 在那里设个断点，然后准备继续。
 
-![](/images/learning/open-course/MIT-6.S081/Labs/lab2_1-syscall_process/usertrapret_break.png)
+![](/images/learning/open-course/MIT-6.S081/labs/lab2_1-syscall_process/usertrapret_break.png)
 
 多按几个`si` 到达跳转语句处，不出意外的话再用一次`si` 就会带我们进入trapoline.S的userret部分了。
 
-![](/images/learning/open-course/MIT-6.S081/Labs/lab2_1-syscall_process/usertrapret_jump.png)
+![](/images/learning/open-course/MIT-6.S081/labs/lab2_1-syscall_process/usertrapret_jump.png)
 
 一切的一切都符合预期，我们成功进入了trampoline.S。
 
 对比左右的汇编代码可以发现它们是对应的。与之前相同，`li`被展开了。
 
-![](/images/learning/open-course/MIT-6.S081/Labs/lab2_1-syscall_process/trapoline_enter_again.png)
+![](/images/learning/open-course/MIT-6.S081/labs/lab2_1-syscall_process/trapoline_enter_again.png)
 
 然后我们一路按`si`到达`sret`语句处。`sret`会做什么呢？让我们看看riscv手册：
 
@@ -169,7 +169,7 @@ syscall函数从trapframe中取出系统调用号，然后调用它。还记得�
 
 我们借助 `p /x sepc` 打印这个寄存器的值看看~（请忽视左图里我之前写成spec的手误）
 
-![](/images/learning/open-course/MIT-6.S081/Labs/lab2_1-syscall_process/trapoline_ret_user.png)
+![](/images/learning/open-course/MIT-6.S081/labs/lab2_1-syscall_process/trapoline_ret_user.png)
 
 0x342是什么？如果你记忆力很好的话，会发现它恰好就是usys.S里的`ret`那行！
 
@@ -177,15 +177,15 @@ syscall函数从trapframe中取出系统调用号，然后调用它。还记得�
 
 总之我们看看之前的截图吧，我们可以发现0x342确实是ret那行，就是下面的截图中高亮的汇编代码下面那行。
 
-![](/images/learning/open-course/MIT-6.S081/Labs/lab2_1-syscall_process/hello_world_again.png)
+![](/images/learning/open-course/MIT-6.S081/labs/lab2_1-syscall_process/hello_world_again.png)
 
 我们用`b *0x342`设个断点在那里，然后执行`si` ，我们回到了用户空间！同时，`sret`也让我们回到了U-mode。
 
-![](/images/learning/open-course/MIT-6.S081/Labs/lab2_1-syscall_process/return_to_user.png)
+![](/images/learning/open-course/MIT-6.S081/labs/lab2_1-syscall_process/return_to_user.png)
 
 用`file user/_sleep`切换符号表，再执行`si`，我们回来了。
 
-![](/images/learning/open-course/MIT-6.S081/Labs/lab2_1-syscall_process/im_back.png)
+![](/images/learning/open-course/MIT-6.S081/labs/lab2_1-syscall_process/im_back.png)
 
 至此，我们就完成了一个完整的系统调用。
 
