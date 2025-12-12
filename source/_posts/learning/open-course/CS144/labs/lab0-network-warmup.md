@@ -84,7 +84,7 @@ Reader& ByteStream::reader()
 }
 ```
 
-读者和写者操控的是一个 ByteStream 对象，所以我们要提供两种不同的视角，每种视角有不同的操作数据的方法。
+读者和写者操控的是同一个 ByteStream 对象，我们则提供了两种不同的视角，每种视角有不同的操作数据的方法。
 
 然后实现两种视角各自的接口：
 
@@ -175,7 +175,8 @@ uint64_t Reader::bytes_popped() const
 }
 ```
 
+这里的 Reader::peek 无需返回整个环，只需尽力而为，所以我们在 head > tail 时只返回 head 到 ring.size 部分的内容而没带上 0 到 tail 的内容；这里的 Writer::push 或许可以用 std::copy 来优化，但我就不写了吧。
+
 然后放下测试结果：
 
 <img src="/images/learning/open-course/CS144/labs/lab0/test.png" width="70%" height="auto">
-写这个 Lab 的感想就是 C++ 好复杂…
