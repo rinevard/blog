@@ -114,7 +114,9 @@ if ( first_index == first_unassembled_idx_ ) {
 
 <img src="/images/learning/open-course/CS144/labs/lab1/ring.png" width="70%" height="auto">
 
-再做一些细节处理和优化，就能得到下面的代码。我们先放头文件：
+上面的思路只能处理新数据的两端（first_index 和 first_indx + data.size）都在环内的情况，然而新数据的某一端可能在环外，这时我们就要裁剪数据，只把和环重叠的部分存入环中。
+
+接下来我们给出完整代码，先放头文件：
 
 ```cpp
 class Reassembler
@@ -145,7 +147,6 @@ using namespace std;
 
 void Reassembler::insert( uint64_t first_index, string data, bool is_last_substring )
 {
-  debug( "Reassembler insert({}, {}, {}) called", first_index, data, is_last_substring );
   if ( output_.writer().is_closed() ) {
     return;
   }
