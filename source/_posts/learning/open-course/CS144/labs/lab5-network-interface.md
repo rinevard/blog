@@ -9,7 +9,7 @@ categories:
   - Labs
 ---
 
-在这个 lab 里，我们要把第二层链路层和第三层网络层连接起来。在出站方向，我们的代码将 IP 包封装为 ETH 帧，并视情况发起 ARP 请求以维护 IP 到 MAC 的映射表；在入站方向，我们把 ETH 帧解析为 IP 包并向上传递，或解析为 ARP 协议包并更新 ARP 表。
+在这个 lab 里，我们要把第二层链路层和第三层网络层连接起来，实现一个能让同一子网下的主机通信的接口。在出站方向，我们的代码将 IP 包封装为 ETH 帧，并视情况发起 ARP 请求以维护 IP 到 MAC 的映射表；在入站方向，我们把 ETH 帧解析为 IP 包并向上传递，或解析为 ARP 协议包并更新 ARP 表。
 
 我们要维护 ARP 表和“想要发送但尚不知道目标 MAC 地址的包”列表，并在一定时间后让它们过期。所以我们在头文件里新增以下字段：
 
@@ -46,6 +46,8 @@ private:
 在出站方向，如果已经知道下一跳对应的 MAC 地址，直接发送就行；如果不知道就要把想要出站的数据存储起来并广播 ARP 请求。注意对同一个 IP 的 ARP 请求不应太频繁，如实验文档所说我们可以设置一个五秒的 CD.
 
 这里的 serialize 函数是一个辅助函数，用于把数据转换成二进制序列。在 InternetDatagram 这些类内部内存不一定连续（比如 `std::vector<Refstd::string> payload {}`），也可能有大小端问题，serialize 则处理这些问题把它们转化成连续的、网络序的字节流。
+
+这里的 transmit 则是对主机的物理发信能力的抽象。
 
 ```cpp
 void NetworkInterface::send_datagram( InternetDatagram dgram, const Address& next_hop )
