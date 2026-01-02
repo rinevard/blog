@@ -1,5 +1,6 @@
 ---
 title: 人迹罕至的路
+layout: post
 ---
 
 <style>

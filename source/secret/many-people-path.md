@@ -1,5 +1,6 @@
 ---
 title: 人来人往的路
+layout: post
 ---
 
 <style>
