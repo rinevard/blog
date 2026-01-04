@@ -106,7 +106,7 @@ deploy:
   repo: git@github.com:rinevard/rinevard.github.io.git
   branch: main
 
-# Hide secret pages from searching
+# Hide secret pages from being searched
 jsonContent:
   pages:
     content: true
