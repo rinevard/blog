@@ -2,5 +2,13 @@
     @extend $block
     padding: article-padding
     margin: block-margin 0
+    background: color-widget-bg
+    border-radius: 12px
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08)
     a
         color: color-link
+    @media screen and (max-width: 799px)
+        padding: 18px
+        margin: 20px 0
+        border-radius: 10px
+        overflow: visible

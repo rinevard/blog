@@ -14,6 +14,12 @@
   padding-right: 2%; /* 增加右侧边距，让横线更靠左一些 */
 }
 
+@media screen and (max-width: 799px) {
+  .toc-sidebar {
+    display: none;
+  }
+}
+
 .toc-sidebar-indicator {
   height: 5px;
   background-color: rgba(55, 53, 47, 0.6); /* 增加默认状态下的不透明度 */
@@ -139,4 +145,86 @@
 
 .toc-sidebar-content .toc-item.active > a {
   color: color-link;
+}
+
+.mobile-toc-panel {
+  display: block;
+  position: fixed;
+  left: 12px;
+  right: 12px;
+  bottom: calc(12px + env(safe-area-inset-bottom));
+  z-index: 560;
+  max-height: min(62vh, 420px);
+  overflow: hidden;
+  background: white;
+  border: 1px solid color-border;
+  border-radius: 12px;
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.12);
+  visibility: hidden;
+  transform: translateY(calc(100% + 24px));
+  transition: transform 0.22s ease, visibility 0.22s ease;
+}
+
+html.mobile-toc-open .mobile-toc-panel {
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.mobile-toc-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-bottom: 1px solid color-border;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.mobile-toc-close {
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 50%;
+  color: color-default;
+  background: transparent;
+  cursor: pointer;
+}
+
+.mobile-toc-close:hover {
+  color: color-link;
+  background: rgba(0, 122, 255, 0.08);
+}
+
+.mobile-toc-content {
+  max-height: calc(min(62vh, 420px) - 65px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 12px 16px 16px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.mobile-toc-content ol.toc {
+  margin: 0;
+  padding-left: 18px;
+  overflow-wrap: anywhere;
+}
+
+.mobile-toc-content .toc-item {
+  margin: 4px 0;
+  line-height: 1.5;
+}
+
+.mobile-toc-content .toc-link {
+  display: block;
+  padding: 4px 8px;
+  margin: 0 -8px;
+  border-radius: 6px;
+  color: color-default;
+  text-decoration: none;
+  white-space: normal;
+}
+
+.mobile-toc-content .toc-link:hover {
+  color: color-link;
+  background: rgba(0, 122, 255, 0.08);
 }

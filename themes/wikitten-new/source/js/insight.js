@@ -216,9 +216,20 @@
         }
     }
 
+    function openSearch () {
+        $main.addClass('show');
+        $('html').addClass('mobile-search-open');
+        $main.find('.ins-search-input').focus();
+    }
+
+    function closeSearch () {
+        $main.removeClass('show');
+        $('html').removeClass('mobile-search-open');
+    }
+
     $.getJSON(CONFIG.CONTENT_URL, function (json) {
         if (location.hash.trim() === '#ins-search') {
-            $main.addClass('show');
+            openSearch();
         }
         $input.on('input', function () {
             var keywords = $(this).val();
@@ -229,17 +240,20 @@
 
 
     $(document).on('click focus', '.search-form-input', function () {
-        $main.addClass('show');
-        $main.find('.ins-search-input').focus();
+        openSearch();
+    }).on('click', '.mobile-search-trigger', function () {
+        openSearch();
     }).on('click', '.ins-search-item', function () {
         gotoLink($(this));
     }).on('click', '.ins-close', function () {
-        $main.removeClass('show');
+        closeSearch();
+    }).on('click', '.ins-mobile-cancel', function () {
+        closeSearch();
     }).on('keydown', function (e) {
         if (!$main.hasClass('show')) return;
         switch (e.keyCode) {
             case 27: // ESC
-                $main.removeClass('show'); break;
+                closeSearch(); break;
             case 38: // UP
                 selectItemByDiff(-1); break;
             case 40: // DOWN
@@ -252,7 +266,7 @@
     // 添加点击搜索框外部区域关闭搜索框的功能
     $(document).on('click', '.ins-search-mask', function(e) {
         if ($(e.target).hasClass('ins-search-mask')) {
-            $main.removeClass('show');
+            closeSearch();
         }
     });
 })(jQuery, window.INSIGHT_CONFIG);

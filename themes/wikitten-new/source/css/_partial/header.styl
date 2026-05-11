@@ -11,6 +11,12 @@
         color: color-default
     a:hover
         color: color-link
+    @media screen and (max-width: 799px)
+        position: sticky
+        top: 0
+        z-index: z-index-header
+        border-radius: 0
+        margin-bottom: 0
 
 $header-block
     height: logo-height
@@ -22,6 +28,10 @@ $header-block-left
 
 $header-block-right
     float: right
+
+#header-main
+    @media screen and (max-width: 799px)
+        display: none
 
 .header-inner
     height: 100%
@@ -82,6 +92,13 @@ $header-block-right
         display: none
     @media mq-normal
         display: none
+    @media screen and (max-width: 799px)
+        display: flex
+        align-items: center
+        gap: 8px
+        height: 56px
+        padding: 0 12px
+        box-sizing: border-box
 
 
 $nav-link
@@ -187,19 +204,59 @@ $nav-link
 #main-nav-mobile
     overflow-y: hidden
     overflow-x: auto
-    .menu
-        clearfix()
-        margin: 0
-        height: header-sub-height
-        .search-form-input
-            display: none
-            @media mq-mini
-                display: block
-            padding: 0 10px
-            margin-right: 15px
-            height: header-sub-height - 6
-            line-height: header-sub-height - 6
-            border-radius: ((header-sub-height - 6)/2)
-            &::-webkit-search-results-decoration
-            &::-webkit-search-cancel-button
-                -webkit-appearance: none
+
+.mobile-nav-button
+    display: none
+    @media screen and (max-width: 799px)
+        display: inline-flex
+        align-items: center
+        justify-content: center
+        flex: 0 0 44px
+        width: 44px
+        height: 44px
+        border: 0
+        border-radius: 50%
+        color: color-default
+        background: transparent
+        font: font-size font-sans
+        cursor: pointer
+        &:hover,
+        &:focus
+            color: color-link
+            background: rgba(0, 122, 255, 0.08)
+
+.mobile-nav-spacer
+    display: none
+    @media screen and (max-width: 799px)
+        display: block
+        flex: 0 0 44px
+        width: 44px
+        height: 44px
+
+.mobile-search-trigger
+    display: none
+    @media screen and (max-width: 799px)
+        display: flex
+        align-items: center
+        flex: 1 1 auto
+        min-width: 0
+        height: 40px
+        padding: 0 14px
+        border: 1px solid color-border
+        border-radius: 20px
+        color: color-default
+        background: #f8f8fa
+        font: 15px font-sans
+        text-align: left
+        cursor: text
+        .fa
+            margin-right: 8px
+            color: color-grey
+        span
+            overflow: hidden
+            white-space: nowrap
+            text-overflow: ellipsis
+        &:hover,
+        &:focus
+            border-color: color-link
+            background: #fff

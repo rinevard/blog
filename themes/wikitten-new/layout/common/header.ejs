@@ -25,15 +25,19 @@
         </div>
     </div>
     <div id="main-nav-mobile" class="header-sub header-inner">
-        <table class="menu outer">
-            <tr>
-                <% for (var i in theme.menu) { %>
-                    <td><a class="main-nav-link" href="<%- url_for(theme.menu[i]) %>"><%= i %></a></td>
-                <% } %>
-                <td>
-                    <%- partial('search/index-mobile') %>
-                </td>
-            </tr>
-        </table>
+        <button class="mobile-nav-button" id="mobile-sidebar-open" type="button" aria-label="打开文章列表">
+            <i class="fa fa-bars"></i>
+        </button>
+        <button class="mobile-search-trigger" type="button" aria-label="搜索文章">
+            <i class="fa fa-search"></i>
+            <span><%= __('index.search') %></span>
+        </button>
+        <% if (!is_archive() && !is_category() && !is_tag() && (is_post() || is_page())) { %>
+            <button class="mobile-nav-button" id="mobile-toc-open" type="button" aria-label="打开文章目录">
+                <i class="fa fa-list-ul"></i>
+            </button>
+        <% } else { %>
+            <span class="mobile-nav-spacer"></span>
+        <% } %>
     </div>
 </header>

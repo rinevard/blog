@@ -13,12 +13,18 @@ input, button
         padding: 0
 
 html, body, #container
-    height: 100%
+    min-height: 100%
+
+#container
+    height: auto
 
 body
     color: color-default
     background: color-background
     font: font-size font-sans
+    @media screen and (max-width: 799px)
+        font-size: 16px
+        line-height: 1.72
     -webkit-text-size-adjust: 100%
     -webkit-font-smoothing: antialiased
     -moz-osx-font-smoothing: grayscale
@@ -70,6 +76,9 @@ code
     min-height: 100%
     & > .outer
         margin-bottom: 30px
+        @media screen and (max-width: 799px)
+            box-sizing: border-box
+            padding: 12px
 
 // 侧边栏固定宽度和位置
 #sidebar
@@ -86,16 +95,23 @@ code
     transition: all 0.3s ease
     
     // 移动设备上的响应式布局
-    @media mq-mobile, mq-mini
-        width: 70%
+    @media screen and (max-width: 799px)
+        width: 84vw
+        max-width: 320px
+        height: 100vh
+        height: 100dvh
+        max-height: 100vh
+        max-height: 100dvh
         left: 0
         top: 0
-        bottom: 0
+        bottom: auto
+        z-index: z-index-header + 20
+        padding: 0
+        background: color-widget-bg
         transform: translateX(-100%)
-        &.hidden
-            transform: translateX(0)
-        &:not(.hidden)
-            transform: translateX(-100%)
+        overflow: hidden
+        opacity: 1
+        visibility: visible
     
     // 侧边栏内容容器
     .sidebar-content
@@ -124,12 +140,31 @@ code
         scrollbar-width: thin
         scrollbar-color: rgba(0, 0, 0, 0.15) transparent
 
+        @media screen and (max-width: 799px)
+            height: 100vh
+            height: 100dvh
+            padding: 22px 18px
+            overflow-y: auto
+            display: block
+
 html.sidebar-hidden #sidebar
     transform: translateX(-100%)
     opacity: 0
     visibility: hidden
-    @media mq-mobile, mq-mini
+    @media screen and (max-width: 799px)
         transform: translateX(-100%)
+
+html.mobile-sidebar-open #sidebar
+    @media screen and (max-width: 799px)
+        transform: translateX(0)
+        opacity: 1
+        visibility: visible
+
+html.mobile-sidebar-open.sidebar-hidden #sidebar
+    @media screen and (max-width: 799px)
+        transform: translateX(0)
+        opacity: 1
+        visibility: visible
 
 // 主内容区域
 #main
@@ -159,11 +194,12 @@ html.sidebar-hidden #main
         margin-right: 0
         width: 70%
 
-@media mq-mobile, mq-mini
+@media screen and (max-width: 799px)
     #main
         width: 100%
         margin-left: 0
         margin-right: 0
+        border-radius: 10px
     html.sidebar-hidden #main
         margin-left: 0
         margin-right: 0
@@ -190,30 +226,35 @@ html.sidebar-hidden #main
     i
         font-size: 16px
         transform: none
+    @media screen and (max-width: 799px)
+        display: none
 
-// 回到顶部按钮移到右下角
-#toTop
-    position: fixed
-    right: 3%
-    bottom: 5%
-    width: 36px
-    height: 36px
-    color: white
-    font-size: 20px
-    line-height: 36px
-    background: color-link
-    text-align: center
-    border-radius: 50%
-    cursor: pointer
-    z-index: 1000
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2)
-    opacity: 0.8
+#mobile-panel-mask
     display: none
-    transition: all 0.2s ease
-    &:hover
-        transform: scale(1.1)
-        opacity: 1
-        box-shadow: 0 3px 8px rgba(0,0,0,0.3)
+    position: fixed
+    inset: 0
+    z-index: z-index-header + 10
+    background: rgba(15, 23, 42, 0.36)
+
+html.mobile-sidebar-open #mobile-panel-mask
+    @media screen and (max-width: 799px)
+        display: block
+
+html.mobile-toc-open #mobile-panel-mask
+    @media screen and (max-width: 799px)
+        display: block
+
+html.mobile-sidebar-open
+    @media screen and (max-width: 799px)
+        overflow: hidden
+
+html.mobile-toc-open
+    @media screen and (max-width: 799px)
+        overflow: hidden
+
+html.mobile-search-open
+    @media screen and (max-width: 799px)
+        overflow: hidden
 
 @import "_extend"
 @import "_partial/header"
@@ -246,6 +287,18 @@ if sidebar is left
     z-index: z-index-header;
     transition: all 0.2s ease-in-out;
     background: #fff;
+}
+
+@media screen and (max-width: 799px) {
+    #header {
+        position: sticky;
+        top: 0;
+        border-radius: 0;
+        background: rgba(255, 255, 255, 0.92);
+        border-bottom: 1px solid color-border;
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+    }
 }
 
 #mobile-nav {

@@ -1,17 +1,87 @@
 $(document).ready(function () {
+    function getArticleTopId() {
+        const articleTitle = $('.article-title').first();
+        if (articleTitle.length === 0) return 'container';
+
+        let articleTopId = articleTitle.attr('id');
+        if (!articleTopId) {
+            articleTopId = 'article-top';
+            articleTitle.attr('id', articleTopId);
+        }
+        return articleTopId;
+    }
+
+    function buildMobileTocList(sourceList) {
+        const tocList = sourceList && sourceList.length ? sourceList.clone() : $('<ol class="toc"></ol>');
+        if (tocList.find('.toc-link').length === 0) {
+            const articleTitle = $('.article-title').first().text().trim() || document.title;
+            const topItem = $('<li class="toc-item toc-level-1"></li>');
+            const topLink = $('<a class="toc-link"></a>').attr('href', '#' + getArticleTopId()).text(articleTitle);
+            tocList.append(topItem.append(topLink));
+        }
+        return tocList;
+    }
+
+    function createMobileTocPanel(title, sourceList) {
+        const mobileTocPanel = $('<div class="mobile-toc-panel"></div>');
+        const mobileTocHeader = $('<div class="mobile-toc-header"><span>' + title + '</span><button type="button" class="mobile-toc-close" aria-label="关闭文章目录"><i class="fa fa-times"></i></button></div>');
+        const mobileTocContent = $('<div class="mobile-toc-content"></div>');
+        mobileTocContent.append(buildMobileTocList(sourceList));
+        mobileTocPanel.append(mobileTocHeader).append(mobileTocContent);
+        $('body').append(mobileTocPanel);
+    }
+
+    function bindMobileTocPanel() {
+        $('#mobile-toc-open').off('click.mobileToc').on('click.mobileToc', function () {
+            $('html').removeClass('mobile-sidebar-open');
+            $('html').addClass('mobile-toc-open');
+        });
+
+        $('.mobile-toc-close, #mobile-panel-mask').off('click.mobileToc').on('click.mobileToc', function () {
+            $('html').removeClass('mobile-toc-open');
+        });
+
+        $('.mobile-toc-content .toc-link').off('click.mobileToc').on('click.mobileToc', function (e) {
+            e.preventDefault();
+
+            const href = $(this).attr('href');
+            if (!href || href.indexOf('#') === -1) return;
+
+            const targetId = decodeURIComponent(href.substring(1));
+            const targetElement = document.getElementById(targetId);
+
+            if (targetElement) {
+                $('html').removeClass('mobile-toc-open');
+                $('html, body').animate({
+                    scrollTop: Math.max($(targetElement).offset().top - 80, 0)
+                }, 300);
+            }
+        });
+    }
+
     // 检查是否在文章页面，并且文章有目录
     const tocArticle = $('.toc-article');
-    if (tocArticle.length === 0) return;
+    if (tocArticle.length === 0) {
+        createMobileTocPanel('文章目录', null);
+        bindMobileTocPanel();
+        return;
+    }
 
     // 创建浮动TOC侧边栏容器
     const tocSidebar = $('<div class="toc-sidebar"></div>');
+    const originalTocTitle = tocArticle.find('.toc-title').first().text().trim();
+    const originalTocList = tocArticle.find('.toc').first();
 
     // 获取文章中的所有带ID的标题
     const headings = $('.article-entry').find('h1, h2, h3, h4, h5, h6').filter(function () {
         return $(this).attr('id') !== undefined && $(this).attr('id') !== '';
     });
 
-    if (headings.length === 0) return;
+    if (headings.length === 0) {
+        createMobileTocPanel(originalTocTitle || '文章目录', originalTocList);
+        bindMobileTocPanel();
+        return;
+    }
 
     // 输出调试信息
     console.log(`找到 ${headings.length} 个带ID的标题`);
@@ -30,11 +100,11 @@ $(document).ready(function () {
     const tocContent = $('<div class="toc-sidebar-content"></div>');
 
     // 添加目录标题
-    const tocTitle = $('<div class="toc-title">' + $('.toc-title').text() + '</div>');
+    const tocTitle = $('<div class="toc-title">' + originalTocTitle + '</div>');
     tocContent.append(tocTitle);
 
     // 复制目录内容
-    const tocList = $('.toc').clone();
+    const tocList = originalTocList.clone();
     tocContent.append(tocList);
 
     // 添加到浮动TOC侧边栏中
@@ -42,6 +112,8 @@ $(document).ready(function () {
 
     // 将浮动TOC侧边栏添加到body
     $('body').append(tocSidebar);
+
+    createMobileTocPanel(originalTocTitle, originalTocList);
 
     // 处理横线点击事件
     $('.toc-sidebar-indicator').on('click', function (e) {
@@ -80,6 +152,8 @@ $(document).ready(function () {
             }, 500);
         }
     });
+
+    bindMobileTocPanel();
 
     // 监听滚动事件，高亮当前标题对应的指示器
     $(window).scroll(function () {

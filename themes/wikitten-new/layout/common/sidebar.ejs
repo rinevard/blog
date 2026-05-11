@@ -1,5 +1,24 @@
 <aside id="sidebar">
     <div class="sidebar-content">
+        <div class="mobile-sidebar-title"><%= config.title %> Blog</div>
+        <% if (theme.menu) { %>
+            <nav class="mobile-sidebar-menu">
+                <% for (var i in theme.menu) { %>
+                    <a href="<%- url_for(theme.menu[i]) %>">
+                        <% if (i === '首页') { %>
+                            <i class="fa fa-home"></i>
+                        <% } else if (i === '文章历史') { %>
+                            <i class="fa fa-history"></i>
+                        <% } else if (i === '关于我') { %>
+                            <i class="fa fa-user-o"></i>
+                        <% } else { %>
+                            <i class="fa fa-link"></i>
+                        <% } %>
+                        <span><%= i %></span>
+                    </a>
+                <% } %>
+            </nav>
+        <% } %>
         <% theme.widgets.forEach(function(widget) { %>
             <%- partial('widget/' + widget) %>
         <% }) %>

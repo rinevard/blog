@@ -9,6 +9,12 @@ $(document).ready(function () {
 
         // 侧边栏切换功能
         $('#sidebar-toggle-btn').click(function () {
+            if (isMobile) {
+                $('html').toggleClass('mobile-sidebar-open');
+                updateToggleButtonIcon(isMobile);
+                return;
+            }
+
             // 切换 <html> 元素的类
             $('html').toggleClass('sidebar-hidden');
 
@@ -20,6 +26,21 @@ $(document).ready(function () {
             }
             // 更新按钮图标
             updateToggleButtonIcon(isMobile);
+        });
+
+        $('#mobile-sidebar-open').click(function () {
+            $('html').removeClass('mobile-toc-open');
+            $('html').addClass('mobile-sidebar-open');
+        });
+
+        $('#mobile-panel-mask').click(function () {
+            $('html').removeClass('mobile-sidebar-open mobile-toc-open');
+        });
+
+        $('#sidebar a').click(function () {
+            if (window.innerWidth <= 799 && !$(this).is('[data-role="directory"]')) {
+                $('html').removeClass('mobile-sidebar-open');
+            }
         });
 
         // 页面加载时根据 HTML 元素的 class 更新图标

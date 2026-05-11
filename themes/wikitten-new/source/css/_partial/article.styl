@@ -2,10 +2,14 @@ article
     padding: 0
     border-radius: 12px
     background-color: #ffffff
+    @media screen and (max-width: 799px)
+        border-radius: 10px
 
 .article
     margin-bottom: block-margin
     margin-top: 0 // 确保文章顶部没有多余空间
+    @media screen and (max-width: 799px)
+        margin-bottom: 20px
 
 .article-inner
     @extend $block
@@ -14,6 +18,8 @@ article
     border-radius: 12px
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08)
     margin-top: 0 // 确保顶部没有额外空间
+    @media screen and (max-width: 799px)
+        border-radius: 10px
 
 .article-banner
     width:100%
@@ -25,6 +31,8 @@ article
     .article-title
         display: block
         margin-bottom: 16px
+    @media screen and (max-width: 799px)
+        padding: 22px 18px 0
 
 .article-title
     font-size: 2em
@@ -41,6 +49,10 @@ article
         font-size: 1.6em
     @media mq-mobile
         font-size: 1.6em
+    @media screen and (max-width: 799px)
+        font-size: 27px
+        line-height: 1.22
+        letter-spacing: 0
 
 .article-meta
     @extend $block-caption
@@ -60,6 +72,15 @@ article
         color: color-grey
         &:hover
             color: color-link
+    @media screen and (max-width: 799px)
+        display: flex
+        flex-wrap: wrap
+        gap: 6px 12px
+        font-size: 14px
+        line-height: 1.6
+        & > div
+            float: none
+            margin-right: 0
 div.article-meta-button
     float: right
     margin-right: 0
@@ -103,14 +124,32 @@ div.article-meta-button
     color: color-default
     padding: 0 article-padding
     line-height: line-height
+    overflow-wrap: anywhere
+    @media screen and (max-width: 799px)
+        padding: 0 18px
+        font-size: 16px
+        line-height: 1.72
     p, table
         line-height: line-height
         margin: paragraph-margin 0
+        @media screen and (max-width: 799px)
+            line-height: 1.72
+            margin: 16px 0
     h1, h2, h3, h4, h5, h6
         font-weight: 600
         line-height: line-height-title
         margin: line-height-title 0
         display: table
+        @media screen and (max-width: 799px)
+            display: block
+            letter-spacing: 0
+    h1
+        @media screen and (max-width: 799px)
+            font-size: 27px
+    h2
+        @media screen and (max-width: 799px)
+            font-size: 21px
+            line-height: 1.35
         .headerlink
             &::before
                 content: "#"
@@ -172,6 +211,11 @@ div.article-meta-button
         border-radius: 8px
         overflow: hidden
         box-shadow: 0 2px 5px rgba(0,0,0,0.05)
+        @media screen and (max-width: 799px)
+            display: block
+            max-width: 100%
+            overflow-x: auto
+            -webkit-overflow-scrolling: touch
         
         th
             font-weight: 600
@@ -210,6 +254,8 @@ div.article-meta-button
         color: #666
         &:before
             display: none
+        @media screen and (max-width: 799px)
+            padding: 12px 14px
         footer
             font-size: font-size
             margin: line-height 0
@@ -268,6 +314,10 @@ div.article-meta-button
         border: 1px solid #e1e4e8
         box-shadow: none
         position: relative
+        -webkit-overflow-scrolling: touch
+        @media screen and (max-width: 799px)
+            padding: 14px
+            font-size: 0.86em
         // PrismJS toolbar (e.g., copy button)
         .toolbar
             position: absolute
@@ -335,6 +385,8 @@ div .article-more-link
         text-decoration: none
         &:hover
             color: color-default
+    @media screen and (max-width: 799px)
+        margin: 0 18px 18px
 
 .article-comment-link
     float: right
