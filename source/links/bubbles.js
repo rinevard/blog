@@ -96,6 +96,7 @@
     hovered: null,
     selected: null,
     dragged: null,
+    scrolling: false,
     pointer: {
       id: null,
       x: CONFIG.pointerIdlePosition,
@@ -104,6 +105,7 @@
       downY: 0,
       lastX: 0,
       lastY: 0,
+      lastClientY: 0,
       downTime: 0,
       moved: false
     },
@@ -279,10 +281,17 @@
     state.pointer.downY = point.y;
     state.pointer.lastX = point.x;
     state.pointer.lastY = point.y;
+    state.pointer.lastClientY = event.clientY;
     state.pointer.downTime = performance.now();
     state.pointer.moved = false;
+    state.scrolling = false;
 
     if (!bubble) {
+      state.scrolling = true;
+      state.hovered = null;
+      state.pointer.x = CONFIG.pointerIdlePosition;
+      state.pointer.y = CONFIG.pointerIdlePosition;
+      canvas.setPointerCapture(event.pointerId);
       return;
     }
 
@@ -296,6 +305,20 @@
   }
 
   function onPointerMove(event) {
+    if (state.pointer.id !== null && state.pointer.id !== event.pointerId) {
+      return;
+    }
+
+    if (state.scrolling) {
+      const dy = event.clientY - state.pointer.lastClientY;
+      if (dy !== 0) {
+        window.scrollBy(0, -dy);
+        state.pointer.moved = true;
+        state.pointer.lastClientY = event.clientY;
+      }
+      return;
+    }
+
     const point = eventPoint(event);
     state.pointer.x = point.x;
     state.pointer.y = point.y;
@@ -310,6 +333,19 @@
 
   function onPointerUp(event) {
     if (state.pointer.id !== event.pointerId) {
+      return;
+    }
+
+    if (state.scrolling) {
+      state.scrolling = false;
+      state.pointer.id = null;
+      state.pointer.x = CONFIG.pointerIdlePosition;
+      state.pointer.y = CONFIG.pointerIdlePosition;
+      state.hovered = null;
+
+      if (canvas.hasPointerCapture(event.pointerId)) {
+        canvas.releasePointerCapture(event.pointerId);
+      }
       return;
     }
 
@@ -342,6 +378,7 @@
       state.dragged.dragged = false;
       state.dragged = null;
     }
+    state.scrolling = false;
     if (canvas.hasPointerCapture(event.pointerId)) {
       canvas.releasePointerCapture(event.pointerId);
     }
