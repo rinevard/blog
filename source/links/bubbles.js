@@ -5,17 +5,34 @@
 
   // 图片泡泡：有头像，悬停/选中时显示 name
   const IMG_BUBBLES = [
-    { name: "雾鸣",    url: "https://rubatotree.github.io/blog/",    image: "avatars/rubato.jpg",    color: "#feaf00", radius: 85, desc: "在这里写关于雾鸣的小作文。" },
-    { name: "日奈",    url: "https://ri-nai.github.io/astro-blog/",    image: "avatars/rinai.jpg", color: "#8fd6b4", radius: 85, desc: "在这里写关于日奈的小作文。" },
-    { name: "Rinevard",    url: "https://rinevard.github.io/",    image: "avatars/alula.jpg",    color: "#feaf00", radius: 85, desc: "这是我自己。" },
-    // { name: "示例链接 3",    url: "https://example3.com",    image: "../images/learning/godot/angry_cow.jpg", color: "#7db5ff" },
-    // { name: "范滇东的博客",  url: "https://blog.flwfdd.xyz/", image: "../images/others/random_thoughts/explore3/rubatotree_card.jpg", color: "#ef2f5f" },
-    // { name: "周弈帆的博客",  url: "https://zhouyifan.net/",   image: "../images/learning/godot/tracy-final.png", color: "#d7a4ff", radius: 76 },
+    { name: "雾鸣",    url: "https://rubatotree.github.io/blog/",    
+      image: "avatars/rubato.jpg",    color: "#feaf00", radius: 80, 
+      desc: "" },
+    { name: "日奈",    url: "https://ri-nai.github.io/astro-blog/",    
+      image: "avatars/rinai.jpg", color: "#8fd6b4", radius: 80, 
+      desc: "" },
+    { name: "Ovideros",    url: "https://ovideros.site/",    
+      image: "avatars/ovid.jpg",    color: "#feaf00", radius: 80, 
+      desc: "" },
+    { name: "范滇东",    url: "https://blog.flwfdd.xyz/",    
+      image: "avatars/fdd.jpg",    color: "#feaf00", radius: 80, 
+      desc: "" },
+    { name: "Niko",    url: "https://store.steampowered.com/app/420530/OneShot/",    
+      image: "avatars/niko.webp",    color: "#feaf00", radius: 90, 
+      desc: "这是 Niko." },
+    { name: "M̴͚̳̘̙̞͒͊̅̃̍o̵͇̮͖̝̣̬̅ň̷͖͈͍͕̀̈̿̿̐ị̷̣̟͋͑̈́̈́̔k̸̥̜̭͎͖̉͐̈́̇̕ã̴̧",    url: "https://x.com/lilmonix3",    
+      image: "avatars/monika.jpg",    color: "#feaf00", radius: 90, 
+      desc: " ̶̨̠̮͖̝͍̭̱̘̈͂̆̒̕͜͠͝ͅJ̵̪̱͉̬͙̲̯̤̤̣͋̈́͊͂̓̈́͝͝ŭ̵̡̡̠̩̺̠̦͍̝̳̐́̊͛́̚̕͝š̵̗̍̅̒͑͂̇̚t̶͈̣̭̽̏͐̈̿̎̀ ̷̤̳̜̇͂̈́́̇̽͝M̴͙̮͚̌̃̇͛̀̎̍͒̍́̓̉̆̒ȏ̴̡̡̰̪̞͚̫̹̩̭̮̳͖̯̺ṋ̸̢͈̙͎͗͂̂̿̓͊ͅį̵͉̦̼̲̣̝̜̪́̆̌̅͘͝k̷͎̓͑͑̒̆̓̕̚͘͝ä̸̧̠̯̥͎̬͉͋̊" },
+    { name: "Rinevard",    url: "https://rinevard.github.io/",    
+      image: "avatars/alula.jpg",    color: "#feaf00", radius: 80, 
+      desc: "这是我自己。" },
   ];
 
   // 文字泡泡：纯色背景，始终显示 text
   const TEXT_BUBBLES = [
-    { text: ["单击放大", "双击拜访"], color: "#4a3f6b", radius: 90 },
+    { text: ["单击放大", "双击拜访"], color: "#4a3f6b", radius: 80 , 
+      desc: "好像完全不知道该放谁到这个页面上...不过欢迎找我交换友链！"
+    },
     // { text: ["示例纯文字"], url: "https://github.com", color: "#8fd6b4", radius: 84 },
   ];
 
@@ -31,7 +48,9 @@
     minCanvasSize: 200,
     referenceWidth: 900,
     initialRadiusScale: 0.7,
-    selectedScale: 1.82,
+    radiusVarianceBase: 0.8,
+    radiusVarianceRange: 0.4,
+    selectedScale: 1.52,
     hoverScale: 1.28,
     pressScale: 0.96,
     selectedHoverBoost: 1.08,
@@ -95,7 +114,8 @@
   };
 
   const bubbles = [...IMG_BUBBLES, ...TEXT_BUBBLES].map((entry, index) => {
-    const radius = entry.radius || DEFAULT_RADIUS;
+    const configRadius = entry.radius || DEFAULT_RADIUS;
+    const radius = configRadius * (CONFIG.radiusVarianceBase + Math.random() * CONFIG.radiusVarianceRange);
     const img = new Image();
     if (entry.image) {
       img.src = entry.image;
