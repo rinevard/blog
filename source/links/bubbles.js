@@ -28,7 +28,7 @@
 
   const CONFIG = {
     maxDevicePixelRatio: 2,
-    minCanvasSize: 320,
+    minCanvasSize: 200,
     referenceWidth: 900,
     initialRadiusScale: 0.7,
     selectedScale: 1.82,
@@ -181,20 +181,24 @@
 
   function keepInside(bubble) {
     const radius = bubble.currentRadius || bubble.radius;
-    if (bubble.x < radius) {
-      bubble.x = radius;
+    const minX = radius;
+    const maxX = Math.max(radius, state.width - radius);
+    const minY = radius;
+    const maxY = Math.max(radius, state.height - radius);
+
+    if (bubble.x < minX) {
+      bubble.x = minX;
       if (bubble.vx < 0) bubble.vx *= -CONFIG.wallBounce;
-    }
-    if (bubble.x > state.width - radius) {
-      bubble.x = state.width - radius;
+    } else if (bubble.x > maxX) {
+      bubble.x = maxX;
       if (bubble.vx > 0) bubble.vx *= -CONFIG.wallBounce;
     }
-    if (bubble.y < radius) {
-      bubble.y = radius;
+
+    if (bubble.y < minY) {
+      bubble.y = minY;
       if (bubble.vy < 0) bubble.vy *= -CONFIG.wallBounce;
-    }
-    if (bubble.y > state.height - radius) {
-      bubble.y = state.height - radius;
+    } else if (bubble.y > maxY) {
+      bubble.y = maxY;
       if (bubble.vy > 0) bubble.vy *= -CONFIG.wallBounce;
     }
   }
@@ -331,14 +335,13 @@
     }
 
     const targetRadius = bubble.currentRadius || bubble.radius;
-    const targetX = Math.min(
-      state.width - targetRadius,
-      Math.max(targetRadius, state.pointer.x + bubble.grabX)
-    );
-    const targetY = Math.min(
-      state.height - targetRadius,
-      Math.max(targetRadius, state.pointer.y + bubble.grabY)
-    );
+    const minX = targetRadius;
+    const maxX = Math.max(targetRadius, state.width - targetRadius);
+    const minY = targetRadius;
+    const maxY = Math.max(targetRadius, state.height - targetRadius);
+
+    const targetX = Math.min(maxX, Math.max(minX, state.pointer.x + bubble.grabX));
+    const targetY = Math.min(maxY, Math.max(minY, state.pointer.y + bubble.grabY));
 
     const oldX = bubble.x;
     const oldY = bubble.y;
