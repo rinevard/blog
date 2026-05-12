@@ -1,0 +1,42 @@
+.bubble-stage {
+  position: relative;
+  height: min(760px, calc(100vh - 150px));
+  min-height: 560px;
+  overflow: hidden;
+  background: #ffffff;
+  touch-action: none;
+}
+
+#bubble-canvas {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: default;
+}
+
+@media screen and (max-width: 799px) {
+  .bubble-stage {
+    height: 640px;
+    min-height: 520px;
+  }
+}
+
+.bubble-info {
+  padding: 18px 24px;
+  text-align: center;
+  color: #303038;
+  font-family: "Microsoft YaHei", "PingFang SC", system-ui, sans-serif;
+  line-height: 1.6;
+}
+
+.bubble-info strong {
+  display: block;
+  font-size: 1.4em;
+  margin-bottom: 6px;
+}
+
+.bubble-info p {
+  margin: 0;
+  color: #555;
+}

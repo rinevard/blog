@@ -38,6 +38,15 @@
                                                             </div>
                                                             <% } %>
                                 </div>
+                                <% } else { %>
+                                    <div class="article-meta article-meta-page">
+                                        <div class="article-date">
+                                            <i class="fa fa-calendar"></i>
+                                            <a href="<%- url_for(post.path) %>">
+                                                <span>2514-7035-0037-1120</span>
+                                            </a>
+                                        </div>
+                                    </div>
                                 <% } %>
                                     <%- partial('post/title', { class_name: 'article-title' }) %>
                         </header>
