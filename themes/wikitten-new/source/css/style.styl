@@ -12,6 +12,22 @@ input, button
         border: 0
         padding: 0
 
+a,
+button,
+[role="button"]
+    -webkit-tap-highlight-color: transparent
+
+a:focus:not(:focus-visible),
+button:focus:not(:focus-visible),
+[role="button"]:focus:not(:focus-visible)
+    outline: none
+
+a:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible
+    outline: 2px solid color-link
+    outline-offset: 2px
+
 html, body, #container
     min-height: 100%
 
